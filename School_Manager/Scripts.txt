@@ -1,0 +1,798 @@
+﻿USE [ims_db]
+GO
+/****** Object:  Table [dbo].[_ColumnInformation]    Script Date: 17-Oct-19 4:11:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[_ColumnInformation](
+	[Table_Name] [nvarchar](100) NOT NULL,
+	[Custom_Columns] [nvarchar](max) NULL,
+	[Search_Columns] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Accounts]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Accounts](
+	[Account_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Account_Type_ID] [int] NULL,
+	[Photo] [image] NULL,
+	[UserName] [nvarchar](100) NULL,
+	[PasswordHash] [binary](32) NULL,
+	[Salt] [binary](32) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AccountType]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccountType](
+	[Account_Type_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Account Type] [nvarchar](100) NULL,
+	[Can View Dashboard] [bit] NULL,
+	[Can View Student Record] [bit] NULL,
+	[Can Add Student] [bit] NULL,
+	[Can Edit Student Record] [bit] NULL,
+	[Can Delete Student Record] [bit] NULL,
+	[Can View Fee Record] [bit] NULL,
+	[Can Edit Fee Record] [bit] NULL,
+	[Can Delete Fee Record] [bit] NULL,
+	[Can Create Fee Record] [bit] NULL,
+	[Can Add Teacher] [bit] NULL,
+	[Can Edit Teacher Record] [bit] NULL,
+ CONSTRAINT [PK__AccountT__B19E45C9237C996F] PRIMARY KEY CLUSTERED 
+(
+	[Account_Type_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Classes]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Classes](
+	[Class_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Class] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Classes] PRIMARY KEY CLUSTERED 
+(
+	[Class_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [UQ__CLassSec__0BBA8440B08BABC3] UNIQUE NONCLUSTERED 
+(
+	[Class] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ColumnInformation]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ColumnInformation](
+	[Class_ID] [int] NOT NULL,
+	[Custom_Columns] [nvarchar](max) NULL,
+	[Default_Fee_Columns] [nvarchar](max) NULL,
+	[Search_Columns] [nvarchar](max) NULL,
+	[Current_Session] [int] NULL,
+	[Current_Fee_Session_ID] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Created_Fee_Records]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Created_Fee_Records](
+	[Class_ID] [int] NULL,
+	[Fee_ID] [int] NULL,
+	[Month] [int] NULL,
+	[Year] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Designer]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Designer](
+	[Designer_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Designer_Name] [varchar](100) NULL,
+	[Designer_Type] [int] NULL,
+	[Class_ID] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DesignerItem]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DesignerItem](
+	[Designer_Item_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Designer_Property_ID] [int] NULL,
+	[Type] [varchar](100) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DesignerItemProperties]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DesignerItemProperties](
+	[Designer_Item_ID] [int] NULL,
+	[Name] [varchar](100) NULL,
+	[Value] [varchar](100) NULL,
+	[DataType] [varchar](100) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DesignerProperties]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DesignerProperties](
+	[Designer_ID] [int] NULL,
+	[Designer_Property_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Property_Name] [varchar](100) NULL,
+	[Designer_Property_Value] [varchar](100) NULL,
+	[Image] [image] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Discounts]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Discounts](
+	[Discount_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Class_ID] [int] NULL,
+	[Student_ID] [int] NULL,
+	[Fee_ID] [int] NULL,
+	[Discount] [int] NULL,
+ CONSTRAINT [PK_Discounts] PRIMARY KEY CLUSTERED 
+(
+	[Discount_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Expense_Type]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Expense_Type](
+	[Expense_Type_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Expense_Title] [varchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Expense_Type_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Expenses]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Expenses](
+	[Expense_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Expense_Type_ID] [int] NULL,
+	[Amount] [int] NULL,
+	[Description] [varchar](300) NULL,
+	[Date] [date] NULL,
+	[Added By] [int] NULL,
+ CONSTRAINT [PK_Expenses] PRIMARY KEY CLUSTERED 
+(
+	[Expense_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Fee_Per_Voucher_Record]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Fee_Per_Voucher_Record](
+	[Fee_Record_ID] [int] NULL,
+	[Voucher_ID] [int] NULL,
+	[Is_Previous] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Fee_Record]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Fee_Record](
+	[Fee_Record_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Fee_ID] [int] NULL,
+	[Paid_Voucher_ID] [int] NULL,
+	[Student_ID] [int] NULL,
+	[Fee] [varchar](100) NULL,
+	[Amount] [int] NULL,
+	[Discount] [int] NULL,
+	[Late_Fee] [int] NULL,
+	[Paid_Amount] [int] NULL,
+	[Apply_Late_Fee] [bit] NULL,
+	[Due_Date] [date] NULL,
+	[Month] [int] NULL,
+	[Year] [int] NULL,
+ CONSTRAINT [PK__Fee_Reco__7B26B75666A5AF87] PRIMARY KEY CLUSTERED 
+(
+	[Fee_Record_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Fee_Structure]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Fee_Structure](
+	[Fee_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Class_ID] [int] NULL,
+	[Fee] [nvarchar](100) NULL,
+	[Amount] [int] NULL,
+	[Late_Fee] [int] NULL,
+	[Due_Date] [int] NULL,
+ CONSTRAINT [PK__Fee_Stru__10B8D20709160F05] PRIMARY KEY CLUSTERED 
+(
+	[Fee_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Parents]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Parents](
+	[Parent_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Father Photo] [image] NULL,
+	[Mother Photo] [image] NULL,
+	[Father Name] [nvarchar](100) NULL,
+	[Mother Name] [nvarchar](100) NULL,
+	[Father CNIC] [nvarchar](100) NULL,
+	[Mother CNIC] [nvarchar](100) NULL,
+	[Father Occupation] [nvarchar](100) NULL,
+	[Father Contact] [nvarchar](100) NULL,
+	[Mother Contact] [nvarchar](100) NULL,
+	[Parent E-mail] [nvarchar](100) NULL,
+	
+	[Is_Active] [bit] NULL,
+ CONSTRAINT [PK__Parents__1886B6A3B10BBBE5] PRIMARY KEY CLUSTERED 
+(
+	[Parent_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product_Information]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product_Information](
+	[Product_ID] [varchar](100) NULL,
+	[Product_Version] [varchar](100) NULL,
+	[Registered_To] [varchar](200) NULL,
+	[Registered_Date] [varchar](100) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RegisteredKeys]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RegisteredKeys](
+	[KeyHash] [binary](32) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Registration]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Registration](
+	[Start_Date] [nvarchar](256) NULL,
+	[End_Date] [nvarchar](256) NULL,
+	[Current_Date] [nvarchar](256) NULL,
+	[Old_Current_Date] [nvarchar](256) NULL,
+	[Days_Left] [nvarchar](256) NULL,
+	[Run_Time] [nvarchar](256) NULL,
+	[Registered_Date] [nvarchar](256) NULL,
+	[Registration_Type] [nvarchar](256) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Sections]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Sections](
+	[Section_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Class_ID] [int] NULL,
+	[Section] [nvarchar](200) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Section_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student_Attendence]    Script Date: 17-Oct-19 4:11:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student_Attendence](
+	[Month] [int] NULL,
+	[Year] [int] NULL,
+	[Student_ID] [int] NULL,
+	[1] [char](1) NULL,
+	[2] [char](1) NULL,
+	[3] [char](1) NULL,
+	[4] [char](1) NULL,
+	[5] [char](1) NULL,
+	[6] [char](1) NULL,
+	[7] [char](1) NULL,
+	[8] [char](1) NULL,
+	[9] [char](1) NULL,
+	[10] [char](1) NULL,
+	[11] [char](1) NULL,
+	[12] [char](1) NULL,
+	[13] [char](1) NULL,
+	[14] [char](1) NULL,
+	[15] [char](1) NULL,
+	[16] [char](1) NULL,
+	[17] [char](1) NULL,
+	[18] [char](1) NULL,
+	[19] [char](1) NULL,
+	[20] [char](1) NULL,
+	[21] [char](1) NULL,
+	[22] [char](1) NULL,
+	[23] [char](1) NULL,
+	[24] [char](1) NULL,
+	[25] [char](1) NULL,
+	[26] [char](1) NULL,
+	[27] [char](1) NULL,
+	[28] [char](1) NULL,
+	[29] [char](1) NULL,
+	[30] [char](1) NULL,
+	[31] [char](1) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Students]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Students](
+	[Student_ID] [int]  NOT NULL primary key,
+	[Photo] [image] NULL,
+	[Name] [nvarchar](100) NULL,
+	[Gender] [nvarchar](100) NULL,
+	[Date Of Birth] [date] NULL,
+	[Contact] [nvarchar](100) NULL,
+	[Email] [nvarchar](100) NULL,
+	[Address] [nvarchar](200) NULL,
+	[Class_ID] [int] NULL,
+	[Section_ID] [int] NULL,
+	[Parent_ID] [int] NULL,
+	[Is_Active] [bit] NULL,
+)	
+GO
+/****** Object:  Table [dbo].[Teacher_Attendence]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Teacher_Attendence](
+	[Month] [int] NULL,
+	[Year] [int] NULL,
+	[Teacher_ID] [int] NULL,
+	[1] [char](1) NULL,
+	[2] [char](1) NULL,
+	[3] [char](1) NULL,
+	[4] [char](1) NULL,
+	[5] [char](1) NULL,
+	[6] [char](1) NULL,
+	[7] [char](1) NULL,
+	[8] [char](1) NULL,
+	[9] [char](1) NULL,
+	[10] [char](1) NULL,
+	[11] [char](1) NULL,
+	[12] [char](1) NULL,
+	[13] [char](1) NULL,
+	[14] [char](1) NULL,
+	[15] [char](1) NULL,
+	[16] [char](1) NULL,
+	[17] [char](1) NULL,
+	[18] [char](1) NULL,
+	[19] [char](1) NULL,
+	[20] [char](1) NULL,
+	[21] [char](1) NULL,
+	[22] [char](1) NULL,
+	[23] [char](1) NULL,
+	[24] [char](1) NULL,
+	[25] [char](1) NULL,
+	[26] [char](1) NULL,
+	[27] [char](1) NULL,
+	[28] [char](1) NULL,
+	[29] [char](1) NULL,
+	[30] [char](1) NULL,
+	[31] [char](1) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Teachers]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Teachers](
+	[Teacher_ID] [int] IDENTITY(1,1) NOT NULL,
+	[Photo] [image] NULL,
+	[Name] [nvarchar](100) NULL,
+	[Father Name] [nvarchar](100) NULL,
+	[Gender] [nvarchar](100) NULL,
+	[Date of Birth] [date] NULL,
+	[Language] [nvarchar](100) NULL,
+	[Contact] [nvarchar](100) NULL,
+	[Address] [nvarchar](100) NULL,
+	[Salary] [int] NULL,
+	[Class_ID] [int] NULL,
+	[Is_Active] [bit] NULL,
+	[Date of Join] [date] NULL,
+	[Rank] [nvarchar](100) NULL,
+
+ CONSTRAINT [PK_Teachers] PRIMARY KEY CLUSTERED 
+(
+	[Teacher_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Voucher_Record]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Voucher_Record](
+	[Voucher ID] [int] IDENTITY(1,1) NOT NULL,
+	[Student_ID] [int] NULL,
+	[DateTime] [datetime] NULL,
+	[Status] [bit] NULL,
+	[Received Time] [time](7) NULL,
+	[Received Date] [date] NULL,
+	[Received By] [int] NULL,
+	[Payment Method] [nvarchar](200) NULL,
+ CONSTRAINT [PK__Voucher___DA2593D97E01D43F] PRIMARY KEY CLUSTERED 
+(
+	[Voucher ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Fee_Per_Voucher_Record] ADD  CONSTRAINT [DF_Fee_Per_Voucher_Record_Is_Previous]  DEFAULT ((0)) FOR [Is_Previous]
+GO
+ALTER TABLE [dbo].[Fee_Record] ADD  CONSTRAINT [DF_Fee_Record_Paid_Amount]  DEFAULT ((0)) FOR [Paid_Amount]
+GO
+ALTER TABLE [dbo].[Fee_Record] ADD  CONSTRAINT [DF_Fee_Record_Apply Late Fee]  DEFAULT ((1)) FOR [Apply_Late_Fee]
+GO
+ALTER TABLE [dbo].[Parents] ADD  CONSTRAINT [DF_Parents_Is_Active]  DEFAULT ((1)) FOR [Is_Active]
+GO
+ALTER TABLE [dbo].[Students] ADD  CONSTRAINT [DF_Students_Is_Active]  DEFAULT ((1)) FOR [Is_Active]
+GO
+ALTER TABLE [dbo].[Teachers] ADD  CONSTRAINT [DF_Teachers_Is_Active]  DEFAULT ((1)) FOR [Is_Active]
+GO
+ALTER TABLE [dbo].[Accounts]  WITH CHECK ADD  CONSTRAINT [FK__Accounts__Accoun__56A9BBE0] FOREIGN KEY([Account_Type_ID])
+REFERENCES [dbo].[AccountType] ([Account_Type_ID])
+GO
+ALTER TABLE [dbo].[Accounts] CHECK CONSTRAINT [FK__Accounts__Accoun__56A9BBE0]
+GO
+ALTER TABLE [dbo].[Discounts]  WITH CHECK ADD  CONSTRAINT [FK__Discounts__Fee_I__5AC46587] FOREIGN KEY([Fee_ID])
+REFERENCES [dbo].[Fee_Structure] ([Fee_ID])
+GO
+ALTER TABLE [dbo].[Discounts] CHECK CONSTRAINT [FK__Discounts__Fee_I__5AC46587]
+GO
+ALTER TABLE [dbo].[Discounts]  WITH CHECK ADD  CONSTRAINT [FK__Discounts__Stude__59D0414E] FOREIGN KEY([Student_ID])
+REFERENCES [dbo].[Students] ([Student_ID])
+GO
+ALTER TABLE [dbo].[Discounts] CHECK CONSTRAINT [FK__Discounts__Stude__59D0414E]
+GO
+ALTER TABLE [dbo].[Fee_Per_Voucher_Record]  WITH CHECK ADD  CONSTRAINT [FK__Fee_Per_V__Vouch__386F4D83] FOREIGN KEY([Voucher_ID])
+REFERENCES [dbo].[Voucher_Record] ([Voucher ID])
+GO
+ALTER TABLE [dbo].[Fee_Per_Voucher_Record] CHECK CONSTRAINT [FK__Fee_Per_V__Vouch__386F4D83]
+GO
+ALTER TABLE [dbo].[Fee_Record]  WITH CHECK ADD  CONSTRAINT [FK__Fee_Recor__Fee_I__33AA9866] FOREIGN KEY([Fee_ID])
+REFERENCES [dbo].[Fee_Structure] ([Fee_ID])
+GO
+ALTER TABLE [dbo].[Fee_Record] CHECK CONSTRAINT [FK__Fee_Recor__Fee_I__33AA9866]
+GO
+ALTER TABLE [dbo].[Fee_Record]  WITH CHECK ADD  CONSTRAINT [FK__Fee_Recor__Paid___349EBC9F] FOREIGN KEY([Paid_Voucher_ID])
+REFERENCES [dbo].[Voucher_Record] ([Voucher ID])
+GO
+ALTER TABLE [dbo].[Fee_Record] CHECK CONSTRAINT [FK__Fee_Recor__Paid___349EBC9F]
+GO
+ALTER TABLE [dbo].[Fee_Record]  WITH CHECK ADD  CONSTRAINT [FK__Fee_Recor__Stude__3592E0D8] FOREIGN KEY([Student_ID])
+REFERENCES [dbo].[Students] ([Student_ID])
+GO
+ALTER TABLE [dbo].[Fee_Record] CHECK CONSTRAINT [FK__Fee_Recor__Stude__3592E0D8]
+GO
+ALTER TABLE [dbo].[Student_Attendence]  WITH CHECK ADD FOREIGN KEY([Student_ID])
+REFERENCES [dbo].[Students] ([Student_ID])
+GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD  CONSTRAINT [FK__Students__Class___2062B9C8] FOREIGN KEY([Class_ID])
+REFERENCES [dbo].[Classes] ([Class_ID])
+GO
+ALTER TABLE [dbo].[Students] CHECK CONSTRAINT [FK__Students__Class___2062B9C8]
+GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD  CONSTRAINT [FK__Students__Parent__3E082B48] FOREIGN KEY([Parent_ID])
+REFERENCES [dbo].[Parents] ([Parent_ID])
+GO
+ALTER TABLE [dbo].[Students] CHECK CONSTRAINT [FK__Students__Parent__3E082B48]
+GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD  CONSTRAINT [FK__Students__Sectio__2156DE01] FOREIGN KEY([Section_ID])
+REFERENCES [dbo].[Sections] ([Section_ID])
+GO
+ALTER TABLE [dbo].[Students] CHECK CONSTRAINT [FK__Students__Sectio__2156DE01]
+GO
+ALTER TABLE [dbo].[Teacher_Attendence]  WITH CHECK ADD FOREIGN KEY([Teacher_ID])
+REFERENCES [dbo].[Teachers] ([Teacher_ID])
+GO
+/****** Object:  StoredProcedure [dbo].[GetCollectionStatus]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[GetCollectionStatus] @month int, @year int 
+AS
+BEGIN
+
+SELECT
+--amount
+SUM (Amount) +
+--late fee
+SUM (CASE WHEN Apply_Late_Fee = 1 AND 
+(([Received Date] IS NOT NULL AND  Due_Date < [Received Date]) OR ([Received Date] IS NULL AND Due_Date < GETDATE())) 
+THEN ISNULL(Late_Fee,0) ELSE 0 END) -
+--discount
+SUM(Discount) -
+--paid amount
+SUM (Paid_Amount) AS Dues 
+INTO #temp1
+FROM 
+Fee_Record 
+LEFT JOIN Voucher_Record ON Voucher_Record.[Voucher ID] = Fee_Record.Paid_Voucher_ID
+
+SELECT  SUM(Paid_Amount) AS [Collection]
+INTO #temp2
+FROM Fee_Record
+LEFT JOIN Voucher_Record ON Voucher_Record.[Voucher ID] = Fee_Record.Paid_Voucher_ID
+WHERE Month([Received Date]) = @month AND Year([Received Date]) = @year
+
+SELECT * FROM #temp1 , #temp2
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetFeeCollections]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[GetFeeCollections] @month int , @year int
+AS BEGIN
+SELECT SUM
+(Paid_Amount) AS [Collection] , [Received Date]
+FROM [Fee_Record]  
+LEFT JOIN [Fee_Structure] ON [Fee_Structure].[Fee_ID] = [Fee_Record].[Fee_ID] 
+LEFT JOIN Voucher_Record ON Voucher_Record.[Voucher ID] = Fee_Record.Paid_Voucher_ID
+WHERE Month([Received Date]) = @month AND Year([Received Date]) = @year
+GROUP BY [Received Date]
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetFeeDetails]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[GetFeeDetails]  @student_id int, @month int , @year int , @status varchar(20)
+as begin
+
+SELECT Fee_Record_ID , Fee_ID , Fee , Amount, Discount , Paid_Amount, Due_Date , Apply_Late_Fee , [Month] , [Year] ,
+CASE WHEN
+(([Received Date] IS NOT NULL AND  Due_Date < [Received Date]) OR ([Received Date] IS NULL AND Due_Date < CONVERT(DATE, GETDATE()))) 
+THEN ISNULL(Late_Fee,0) ELSE 0 END AS Late_Fee ,
+Amount + CASE WHEN 
+(([Received Date] IS NOT NULL AND  Due_Date < [Received Date]) OR ([Received Date] IS NULL AND Due_Date < CONVERT(DATE, GETDATE()))) 
+THEN ISNULL(Late_Fee,0) ELSE 0 END - Discount - Paid_Amount AS Due_Amount
+INTO #Records
+FROM Fee_Record 
+LEFT JOIN Voucher_Record ON Voucher_Record.[Voucher ID] = Fee_Record.Paid_Voucher_ID
+WHERE Fee_Record.Student_ID = @student_id AND (@month IS NULL OR [Month] = @month) AND (@year IS NULL OR [Year] = @year)
+
+SELECT * , 
+CASE WHEN Paid_Amount != 0 AND Due_Amount != 0 THEN 'PARTIALLY PAID'
+WHEN Due_Date >= CONVERT(DATE, GETDATE()) AND Due_Amount > 0 THEN 'PENDING'
+WHEN Due_Date < CONVERT(DATE, GETDATE()) AND Due_Amount > 0 THEN 'DUE'
+ELSE 'PAID' END AS Fee_Status
+INTO #Final
+FROM #Records
+
+drop table #Records
+
+SELECT * FROM #Final WHERE @status IS NULL OR  Fee_Status = @status
+
+drop table #Final
+
+end
+
+select GETDATE()
+GO
+/****** Object:  StoredProcedure [dbo].[GetFeePaymentDetails]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[GetFeePaymentDetails]  @student_id int
+as begin
+
+SELECT Fee_Record_ID , Fee_ID , Fee , Amount, Discount , Paid_Amount, Due_Date , Apply_Late_Fee , [Month] , [Year] ,
+CASE WHEN
+(([Received Date] IS NOT NULL AND  Due_Date < [Received Date]) OR ([Received Date] IS NULL AND Due_Date < CONVERT(DATE, GETDATE()))) 
+THEN ISNULL(Late_Fee,0) ELSE 0 END AS Late_Fee ,
+Amount + CASE WHEN 
+(([Received Date] IS NOT NULL AND  Due_Date < [Received Date]) OR ([Received Date] IS NULL AND Due_Date < CONVERT(DATE, GETDATE()))) 
+THEN ISNULL(Late_Fee,0) ELSE 0 END - Discount - Paid_Amount AS Due_Amount
+INTO #Records
+FROM Fee_Record 
+LEFT JOIN Voucher_Record ON Voucher_Record.[Voucher ID] = Fee_Record.Paid_Voucher_ID
+WHERE Fee_Record.Student_ID = @student_id 
+
+SELECT * 
+FROM #Records
+WHERE Due_Amount != 0
+
+drop table #Records
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[GetFeeRecord]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[GetFeeRecord] @class_id int , @month int , @year int , @section_id int
+as begin
+SELECT [Month] , [Year] , [Fee] , Fee_Record_ID , Fee_Record.Student_ID, [Name] , Due_Date ,
+--amount
+SUM (Amount) AS Amount,
+--late fee
+SUM (CASE WHEN Apply_Late_Fee = 1 AND 
+(([Received Date] IS NOT NULL AND  Due_Date < [Received Date]) OR ([Received Date] IS NULL AND Due_Date < CONVERT(DATE, GETDATE()))) 
+THEN ISNULL(Late_Fee,0) ELSE 0 END) AS Late_Fee,
+--discount
+SUM(Discount) AS Discount,
+--paid amount
+SUM (Paid_Amount) AS Paid_Amount
+INTO #CurrentClass
+FROM 
+Fee_Record 
+LEFT JOIN Voucher_Record ON Voucher_Record.[Voucher ID] = Fee_Record.Paid_Voucher_ID
+LEFT JOIN Students ON Students.Student_ID = Fee_Record.Student_ID
+WHERE Students.Class_ID = @class_id AND Students.Is_Active = 1 AND (@section_id IS NULL OR Students.Section_ID = @section_id)
+GROUP BY [Month] , [Year] , [Fee] , Fee_Record_ID , Fee_Record.Student_ID , [Name] ,  Due_Date 
+
+SELECT [Month] , [Year] , [Fee] , Fee_Record_ID , Student_ID, [Name],
+Amount , Late_Fee , Discount , Due_Date , Paid_Amount , (Amount + Late_Fee - Discount - Paid_Amount) AS Due_Amount
+INTO #WholeClass  FROM #CurrentClass
+
+drop table #CurrentClass
+
+SELECT Student_ID , [Name] ,
+SUM (CASE WHEN [Month] = @month AND [Year] = @year THEN Amount ELSE 0 END) AS Fee,
+SUM (CASE WHEN [Month] = @month AND [Year] = @year THEN Late_Fee ELSE 0 END) AS [Late Fee],
+SUM (CASE WHEN [Month] = @month AND [Year] = @year THEN Discount ELSE 0 END) AS Discount,
+SUM (CASE WHEN [Month] != @month OR [Year] != @year THEN Due_Amount ELSE 0 END) AS Dues,
+CASE WHEN 
+SUM (CASE WHEN Due_Date < CONVERT(DATE, GETDATE()) AND Due_Amount > 0 THEN 1 ELSE 0 END) > 0 
+THEN 'DUE' 
+WHEN 
+SUM (CASE WHEN Due_Date >= CONVERT(DATE, GETDATE()) AND Due_Amount > 0 THEN 1 ELSE 0 END) > 0
+THEN 'PENDING'
+ELSE 'PAID' END AS [Status]
+INTO #Final
+FROM #WholeClass 
+GROUP BY Student_ID , [Name] 
+
+drop table #WholeClass
+
+SELECT Student_ID , [Name] , Fee , [Late Fee] , Discount , Dues , 
+(Fee + [Late Fee] - Discount + Dues) AS Total , [Status] AS FeeStatus
+FROM #Final ORDER BY Student_ID
+
+drop table #Final
+
+end
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetNextID]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[GetNextID] @table nvarchar(max)
+as
+begin
+SELECT IDENT_CURRENT(@table)+1;
+end
+GO
+/****** Object:  StoredProcedure [dbo].[GetPKName]    Script Date: 17-Oct-19 4:11:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[GetPKName] @table nvarchar(500)
+AS
+BEGIN
+SELECT Col.Column_Name from 
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS Tab, 
+    INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE Col 
+WHERE 
+    Col.Constraint_Name = Tab.Constraint_Name
+    AND Col.Table_Name = Tab.Table_Name
+    AND Constraint_Type = 'PRIMARY KEY'
+    AND Col.Table_Name = @table
+	END
+GO
+
+INSERT INTO AccountType( [Account Type]
+      ,[Can View Dashboard]
+      ,[Can View Student Record]
+      ,[Can Add Student]
+      ,[Can Edit Student Record]
+      ,[Can Delete Student Record]
+      ,[Can View Fee Record]
+      ,[Can Edit Fee Record]
+      ,[Can Delete Fee Record]
+      ,[Can Create Fee Record]
+      ,[Can Add Teacher]
+      ,[Can Edit Teacher Record])
+	  VALUES
+	  ('Admisitrator',1,1,1,1,1,1,1,1,1,1,1)
+
+	  INSERT INTO AccountType( [Account Type]
+      ,[Can View Dashboard]
+      ,[Can View Student Record]
+      ,[Can Add Student]
+      ,[Can Edit Student Record]
+      ,[Can Delete Student Record]
+      ,[Can View Fee Record]
+      ,[Can Edit Fee Record]
+      ,[Can Delete Fee Record]
+      ,[Can Create Fee Record]
+      ,[Can Add Teacher]
+      ,[Can Edit Teacher Record])
+	  VALUES
+	  ('Accountant',0,0,0,0,0,1,1,1,1,0,0)
+
+	  INSERT INTO Accounts ([Account_Type_ID]
+      ,[Photo]
+      ,[UserName]
+      ,[PasswordHash]
+      ,[Salt])
+	  VALUES
+	  (1,NULL,'Admin',CONVERT(binary(32),'1462620AD4FB609840C3AAEB24686A291679E0721EB91D649630102A734A0AE2',2)
+	  ,CONVERT(binary(32),'292F5AFAACD4C3854798C3E50497F119C874EC6872D51831D18ED47D43F51DB2',2))
+	  
+GO
+ USE [ims_db]
+GO
+INSERT INTO [dbo].[_ColumnInformation]([Table_Name],[Custom_Columns],[Search_Columns]) VALUES ('Teachers', NULL ,NULL)
+INSERT INTO [dbo].[_ColumnInformation]([Table_Name],[Custom_Columns],[Search_Columns]) VALUES ('Parents', NULL ,NULL)
+INSERT INTO [dbo].[_ColumnInformation]([Table_Name],[Custom_Columns],[Search_Columns]) VALUES ('Student_ID_Name', 'Gr.no.' ,NULL)
+INSERT INTO [dbo].[_ColumnInformation]([Table_Name],[Custom_Columns],[Search_Columns]) VALUES ('Parent_ID_Name', 'Gr.no.' ,NULL)
+INSERT INTO [dbo].[_ColumnInformation]([Table_Name],[Custom_Columns],[Search_Columns]) VALUES ('Teacher_ID_Name', 'Gr.no.' ,NULL)
+INSERT INTO [dbo].[_ColumnInformation]([Table_Name],[Custom_Columns],[Search_Columns]) VALUES ('Teacher_Class_ID_Name', 'Class Under' ,NULL)
+GO

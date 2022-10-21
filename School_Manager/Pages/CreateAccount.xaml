@@ -1,0 +1,114 @@
+﻿<local:BasePage x:TypeArguments="local:CreateAccountViewModel"
+                x:Class="School_Manager.CreateAccount"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:School_Manager"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf" 
+      Title="LoginPage"
+      x:Name="Page"
+      VerticalAlignment="Center"
+      HorizontalAlignment="Center"
+      >
+
+    <Grid Margin="30"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Center"
+          TextBlock.TextAlignment="Center">
+
+
+        <Border
+              Background="{StaticResource LightColorBrush}" 
+              CornerRadius="20"
+              >
+
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="10" Opacity="0.3" Softness="10"/>
+            </Border.BitmapEffect>
+
+            <StackPanel Margin="50 20 50 20">
+                <!--Header-->
+                <TextBlock Text="Create an account" 
+                           Margin="0 0 0 20"
+                           FontSize="{StaticResource FontSizeLarge}"/>
+
+                <!--Account type-->
+                <ComboBox ItemsSource="{Binding AccountTypes}"
+                          HorizontalContentAlignment="Left"
+                          materialDesign:ComboBoxAssist.ClassicMode ="True"
+                          SelectedItem="{Binding SelectedAccountType}"
+                          Padding="5"
+                          VerticalAlignment="Bottom"
+                          materialDesign:HintAssist.Hint="Select Account Type"
+                          FontSize="{StaticResource FontSizeRegular}"
+                          Margin="0 0 0 0"/>
+                
+               
+                
+                <!--Username-->
+                <TextBox Padding="5"
+                         Margin="0 10 0 0"
+                         Text="{Binding UserName}"
+                         FontSize="{StaticResource FontSizeRegular}"
+                         materialDesign:HintAssist.Hint="User Name"
+                         materialDesign:HintAssist.IsFloating="True"
+                         materialDesign:HintAssist.FloatingOffset="0 -20"
+                         TextAlignment="Left"
+                         />
+
+                <!--Pasword-->
+                <PasswordBox 
+                            x:Name="PasswordText"
+                            Padding="5"
+                            Margin="0 10 0 0"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            materialDesign:HintAssist.Hint="Password"                                 
+                            materialDesign:HintAssist.IsFloating="True"
+                            materialDesign:HintAssist.FloatingOffset="0 -20"
+                            HorizontalContentAlignment="Left"
+                            />
+                <!--Confirm password-->
+                <PasswordBox 
+                            x:Name="ConfirmPasswordText"
+                            Padding="5"
+                            Margin="0 10 0 0"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            materialDesign:HintAssist.Hint="Confirm Password"                                 
+                            materialDesign:HintAssist.IsFloating="True"
+                            materialDesign:HintAssist.FloatingOffset="0 -20"
+                            HorizontalContentAlignment="Left"
+                            />
+
+                <!--Admin pasword-->
+                <PasswordBox 
+                            x:Name="AdminPasswordText"
+                            Padding="5"
+                            Margin="0 10 0 0"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            materialDesign:HintAssist.Hint="Admin Password"                                 
+                            materialDesign:HintAssist.IsFloating="True"
+                            materialDesign:HintAssist.FloatingOffset="0 -20"
+                            HorizontalContentAlignment="Left" />
+
+                <Button Content="Sign up"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Margin="0 20 0 0"
+                        Command="{Binding SignUpCommand}"
+                        CommandParameter="{Binding ElementName=Page}"
+                        />
+
+                <!--Button-->
+                <Button Content="Aready have an account? Login !" 
+                        Margin="0 0 0 0" 
+                        Style="{StaticResource LinkButton}"
+                        Command="{Binding GotoLoginCommand}"/>
+            </StackPanel>
+
+        </Border>
+    </Grid>
+
+</local:BasePage>
+

@@ -1,0 +1,187 @@
+﻿<local:BasePage x:TypeArguments="local:FeeRecordViewModel"  x:Class="School_Manager.FeeRecord"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:School_Manager"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      mc:Ignorable="d" 
+      Title="FeeRecord" Background="White">
+
+    <Grid Margin="20 0" Background="{StaticResource LightColorBrush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header-->
+        <local:Header Heading="Fee Record"/>
+
+        <Grid Grid.Row="1">
+            <Grid Margin="0 10 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding SelectedClass}" 
+                           VerticalAlignment="Bottom"
+                           FontSize="{StaticResource FontSizeLarge}"/>
+                <Grid HorizontalAlignment="Right" Grid.Column="1" x:Name="grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Classes-->
+                    <ComboBox ItemsSource="{Binding ClassNames}"
+                              materialDesign:ComboBoxAssist.ClassicMode ="True"
+                              SelectedItem="{Binding SelectedClass}"
+                              Grid.Column="0" Cursor="Hand"
+                              Margin="0,0,29.6,-0.4"
+                              Padding="0 15"
+                              VerticalAlignment="Bottom"
+                              MaxWidth="150"
+                              MinWidth="100"
+                              materialDesign:HintAssist.Hint="Class"
+                              materialDesign:HintAssist.IsFloating="True"
+                              materialDesign:HintAssist.FloatingScale="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ClassSelectionChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+
+                    <!--Sections-->
+                    <ComboBox ItemsSource="{Binding SectionNames}"
+                              SelectedItem="{Binding SelectedSection}"
+                              materialDesign:ComboBoxAssist.ClassicMode ="True"
+                              Grid.Column="1" Cursor="Hand"
+                              Padding="0 15"
+                              Margin="0 0 0 0"
+                              MaxWidth="150"
+                              MinWidth="100"
+                              VerticalAlignment="Bottom"
+                              materialDesign:HintAssist.Hint="Section"
+                              materialDesign:HintAssist.IsFloating="True"
+                              materialDesign:HintAssist.FloatingScale="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction 
+                                 Command="{Binding SectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+
+                    <!--Columns List-->
+                    <ComboBox ItemsSource="{Binding ColumnNames}"
+                              materialDesign:ComboBoxAssist.ClassicMode ="True"
+                              Grid.Column="2" Cursor="Hand"
+                              Padding="0 15"
+                              Margin="30 0 0 0"
+                              MaxWidth="150"
+                              MinWidth="100"
+                              VerticalAlignment="Bottom"
+                              materialDesign:HintAssist.Hint="Filter"
+                              Visibility="Collapsed">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DropDownClosed">
+                                <i:InvokeCommandAction 
+                                 Command="{Binding ApplyFilterCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+
+                    <!--Months-->
+                    <ComboBox ItemsSource="{Binding Months}"
+                              SelectedItem="{Binding SelectedMonth}"
+                              materialDesign:ComboBoxAssist.ClassicMode ="True"
+                              Grid.Column="3" Cursor="Hand"
+                              Padding="0 15"
+                              Margin="30 0 0 0"
+                              MaxWidth="150"
+                              MinWidth="100"
+                              VerticalAlignment="Bottom"
+                              materialDesign:HintAssist.Hint="Month"
+                              materialDesign:HintAssist.IsFloating="True"
+                              materialDesign:HintAssist.FloatingScale="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ClassSelectionChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+
+                    <!--Years-->
+                    <ComboBox ItemsSource="{Binding Years}"
+                              SelectedItem="{Binding SelectedYear}"
+                              materialDesign:ComboBoxAssist.ClassicMode="True"
+                              Grid.Column="4" Cursor="Hand"
+                              Padding="0 15"
+                              Margin="30 0 0 0"
+                              MaxWidth="150"
+                              MinWidth="100"
+                              VerticalAlignment="Bottom"
+                              materialDesign:HintAssist.Hint="Year"
+                              materialDesign:HintAssist.IsFloating="True"
+                              materialDesign:HintAssist.FloatingScale="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ClassSelectionChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+
+                    <local:SearchBox x:Name="SearchBox" 
+                                     Grid.Column="5"
+                                     Margin="20 0 10 0"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom"
+                                     SearchColumns="{Binding SearchColumns,Mode=TwoWay}"
+                                     SelectedClass="{Binding SelectedClass}"/>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <TextBlock Text="No Records Found...!"
+                   Grid.Row="2"
+                   Foreground="{StaticResource DarkGrayBrush}"
+                   FontSize="{StaticResource FontSizeLarge}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Visibility="{Binding IsNoRecordVisible ,Converter={local:BoolToVisibilityConverter}}"/>
+
+        <local:SearchableDataGrid x:Name="datagrid"
+                                  Type="FeeRecord"
+                                  Grid.Row="2"
+                                  ItemsSource="{Binding GridData,Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedItem}"
+                                  SearchText="{Binding ElementName=SearchBox,Path=SearchText,Mode=TwoWay}"
+                                  SearchColumns="{Binding SearchColumns}"
+                                  BeginSearch="{Binding BeginSearch, ElementName=SearchBox, Mode=TwoWay}"
+                                  IsDataLoading="{Binding IsDataLoading}"
+                                  Visibility="{Binding IsNoRecordVisible ,Converter={local:BoolToInverseVisibilityConverter}}"/>
+
+        <StackPanel Grid.Row="3" Margin="0 5 0 5" Orientation="Horizontal" HorizontalAlignment="Right" Height="20">
+            <Border Background="{StaticResource DarkGreenColorBrush}" Width="15" Height="15"/>
+            <TextBlock Text="Paid" FontSize="{StaticResource FontSizeSmall}" Margin="2 0 10 0" VerticalAlignment="Bottom"/>
+            <Border Background="{StaticResource DarkYellowColorBrush}" Width="15" Height="15"/>
+            <TextBlock Text="Pending" FontSize="{StaticResource FontSizeSmall}" Margin="2 0 10 0" VerticalAlignment="Bottom"/>
+            <Border Background="{StaticResource RedColorBrush}" Width="15" Height="15"/>
+            <TextBlock Text="Due" FontSize="{StaticResource FontSizeSmall}" Margin="2 0 10 0" VerticalAlignment="Bottom"/>
+        </StackPanel>
+
+    </Grid>
+
+</local:BasePage>

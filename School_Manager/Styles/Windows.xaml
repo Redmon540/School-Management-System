@@ -1,0 +1,719 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:local="clr-namespace:School_Manager"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <!--  Main Window Style (making UI lag) -->
+    <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <!--  Main Window Outline  -->
+                    <Grid SnapsToDevicePixels="True">
+
+                        <!--  Opacity mask for corners on grid  -->
+                        <Border
+                            x:Name="Container"
+                            Background="{StaticResource LightColorBrush}"
+                            CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.WindowCornerRadius}"
+                            SnapsToDevicePixels="False" />
+
+                        <!--  Grid Window Content  -->
+                        <Grid>
+
+                            <!--  Blur overlay  -->
+                            <Grid.Effect>
+                                <BlurEffect KernelType="Gaussian" Radius="0" />
+                            </Grid.Effect>
+
+                            <!--  Triggers for blur overlay  -->
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"
+                                                            To="4"
+                                                            Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"
+                                                            To="0"
+                                                            Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <!--  Corner Clipping  -->
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=Container}" />
+                            </Grid.OpacityMask>
+
+
+                            <!--  Dim Overlay  -->
+                            <Grid
+                                Panel.ZIndex="1"
+                                Background="Black"
+                                IsHitTestVisible="False"
+                                Opacity="0">
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0.5"
+                                                                Duration="0:0:0.2" />
+
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0"
+                                                                Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=Container}" />
+                                </Grid.OpacityMask>
+                            </Grid>
+
+                            <!--  Main Window Content  -->
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+
+                                    <!--  Title Bar  -->
+                                    <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.TitleHeightGridLength, FallbackValue=42}" />
+                                    <!--  Drop Shadow  -->
+                                    <RowDefinition Height="Auto" />
+                                    <!--  Window Content  -->
+                                    <RowDefinition Height="*" />
+
+                                </Grid.RowDefinitions>
+
+                                <!--  Title Bar Grid  -->
+                                <Grid Grid.Row="0" Panel.ZIndex="1">
+
+                                    <Grid.ColumnDefinitions>
+                                        <!--Logo-->
+                                        <ColumnDefinition Width="260" />
+                                        <!--  Title  -->
+                                        <ColumnDefinition Width="*" />
+                                        <!--  Window Buttons  -->
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Logo-->
+                                    <Border Background="{StaticResource SecondaryColorBrush}"
+                                            Grid.RowSpan="2" Margin="0 0 0 -5">
+                                        <Image Margin="10"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Source="/School_Manager;component/Resources/infinityLogo.png"
+                                               />
+                                    </Border>
+                                    
+                                    <!--  Title  -->
+                                    <Viewbox
+                                        Grid.Column="1"
+                                        Margin="0">
+                                        <TextBlock Margin="0,8" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+                                    </Viewbox>
+
+                                    <!--  Window Buttons  -->
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <Button
+                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.MinimizedCommand}"
+                                            Content="_"
+                                            Foreground="Gray"
+                                            Style="{StaticResource WindowControlButton}" />
+                                        <Button
+                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.MaximizedCommand}"
+                                            Content="[ ]"
+                                            Foreground="Gray"
+                                            Style="{StaticResource WindowControlButton}" />
+                                        <Button
+                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.CloseCommand}"
+                                            Content="X"
+                                            Foreground="Gray"
+                                            Style="{StaticResource WindowCloseButton}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!--  Drop Shadow Grid  -->
+                                <Border Grid.Column="1"
+                                        Grid.Row="1"
+                                        Height="5"
+                                        BorderThickness="0,0.6,0,0">
+                                    <!--  Under line  -->
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1 , 0">
+                                            <GradientStop Offset="0.0" Color="White" />
+                                            <GradientStop Offset="0.5" Color="{StaticResource LightGray}" />
+                                            <GradientStop Offset="1.0" Color="White" />
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+
+                                    <!--  Drop Shadow  -->
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0 , 1">
+                                            <GradientStop Offset="0.0" Color="{StaticResource VeryLightGray}" />
+                                            <GradientStop Offset="1.0" Color="White" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+
+                                <!--  Page Content  -->
+                                <Border
+                                    Grid.Row="2"
+                                    Padding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.InnerContentPadding}"
+                                    ClipToBounds="True">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </Border>
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.TitleHeight}"
+                    GlassFrameThickness="0"
+                    ResizeBorderThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ResizeBorderThickness}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LoginWindowStyle" TargetType="{x:Type Window}">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+
+                    <Border
+                        Panel.ZIndex="1"
+                        Background="{StaticResource LightColorBrush}"
+                        CornerRadius="30">
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!--  Close button  -->
+                            <Button
+                                Grid.Row="0"
+                                Margin="0,15,15,0"
+                                HorizontalAlignment="Right"
+                                Panel.ZIndex="1"
+                                Command="{Binding DataContext.CloseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:LoginWindow}}"
+                                Content="{StaticResource CrossIcon}"
+                                Foreground="{StaticResource LightColorBrush}"
+                                Style="{StaticResource IconGrowHoverButton}"
+                                WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                            <!--  Primary color background  -->
+                            <Border
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                CornerRadius="30 30 0 0">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
+                                        <GradientStop Offset="0" Color="{StaticResource PrimaryLightColor}" />
+                                        <GradientStop Offset="0.5" Color="{StaticResource PrimaryColor}" />
+                                        <GradientStop Offset="1" Color="{StaticResource PrimaryDarkColor}" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+
+
+                            <!--  Logo  -->
+                            <Image Width="200" 
+                                   Grid.Row="1"
+                                   Margin="20"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   HorizontalAlignment="Center"
+                                   Source="/School_Manager;component/Resources/infinityLogo.png"/>
+
+                            <!--  Main Content  -->
+                            <ContentPresenter
+                                Grid.Row="2"
+                                Grid.RowSpan="2"
+                                Content="{TemplateBinding Content}" />
+
+                        </Grid>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="30" GlassFrameThickness="0" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Dialog Window Style  -->
+    <Style TargetType="{x:Type local:DialogWindow}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <!--  Main Window Outline  -->
+
+                    <Grid>
+
+                        <!--  Opacity mask for corners on grid  -->
+                        <Border
+                            x:Name="Container"
+                            Background="{StaticResource LightColorBrush}"
+                            CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.WindowCornerRadius}" />
+
+                        <!--  Grid Main Window Content  -->
+                        <Grid>
+
+
+                            <!--  Corner Clipping  -->
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=Container}" />
+                            </Grid.OpacityMask>
+
+                            <!--  Blur overlay  -->
+                            <Grid.Effect>
+                                <BlurEffect KernelType="Gaussian" Radius="0" />
+                            </Grid.Effect>
+
+                            <!--  Triggers for blur overlay  -->
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"
+                                                            To="4"
+                                                            Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"
+                                                            To="0"
+                                                            Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+
+                            <!--  Dim Overlay  -->
+                            <Grid
+                                Panel.ZIndex="1"
+                                Background="Black"
+                                IsHitTestVisible="False"
+                                Opacity="0">
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0.5"
+                                                                Duration="0:0:0.2" />
+
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0"
+                                                                Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                            </Grid>
+
+                            <!--  Main Window Content  -->
+                            <Grid Grid.Row="0">
+
+                                <Grid.RowDefinitions>
+
+                                    <!--  Title Bar  -->
+                                    <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.TitleHeightGridLength}" />
+                                    <!--  Window Content  -->
+                                    <RowDefinition Height="*" />
+
+                                </Grid.RowDefinitions>
+
+                                <!--  Title Bar Grid  -->
+                                <Grid Grid.Row="0" Panel.ZIndex="1" Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.TitleBarColor}">
+                                    <Grid.ColumnDefinitions>
+
+                                        <!--  Message Icon  -->
+                                        <ColumnDefinition Width="Auto" />
+                                        <!--  Title  -->
+                                        <ColumnDefinition Width="*" />
+                                        <!--  Window Buttons  -->
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Title  -->
+                                    <Viewbox
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="1"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left">
+                                        <TextBlock
+                                            Margin="10,8"
+                                            Foreground="{StaticResource LightColorBrush}"
+                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.Title}" />
+                                    </Viewbox>
+
+                                    <!--  Window Buttons  -->
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <Button
+                                            Background="Transparent"
+                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.CloseCommand}"
+                                            Content="X"
+                                            Foreground="{StaticResource LightColorBrush}"
+                                            Style="{StaticResource WindowCloseButton}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!--  Page Content  -->
+                                <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.TitleHeight}"
+                    GlassFrameThickness="0"
+                    ResizeBorderThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ResizeBorderThickness}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Dialog Page Style  -->
+    <Style TargetType="{x:Type local:DialogPage}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <!--  Main Window Outline  -->
+
+                    <Grid>
+
+                        <!--  Opacity mask for corners on grid  -->
+                        <Border
+                            x:Name="Container"
+                            Background="{StaticResource LightColorBrush}"
+                            CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.WindowCornerRadius}" />
+
+                        <!--  Grid Main Window Content  -->
+                        <Grid>
+
+
+                            <!--  Corner Clipping  -->
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=Container}" />
+                            </Grid.OpacityMask>
+
+                            <!--  Blur overlay  -->
+                            <!--<Grid.Effect>
+                                <BlurEffect KernelType="Gaussian" Radius="0"/>
+                            </Grid.Effect>-->
+
+                            <!--  Triggers for blur overlay  -->
+                            <!--<Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent},Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation To="4"
+                                                                         Duration="0:0:0.2"
+                                                                         Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation To="0"
+                                                                         Duration="0:0:0.2"
+                                                                         Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>-->
+
+
+                            <!--  Dim Overlay  -->
+                            <Grid
+                                Panel.ZIndex="1"
+                                Background="Black"
+                                IsHitTestVisible="False"
+                                Opacity="0">
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0.5"
+                                                                Duration="0:0:0.2" />
+
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0"
+                                                                Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                            </Grid>
+
+                            <!--  Close Buttons  -->
+                            <Button
+                                Padding="5,10,10,5"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="1"
+                                Background="Transparent"
+                                Command="{Binding CloseCommand}"
+                                Content="X"
+                                FontSize="{StaticResource FontSizeSmall}"
+                                Foreground="{StaticResource VeryDarkGrayBrush}"
+                                Style="{StaticResource WindowCloseButton}" />
+
+                            <!--  Page Content  -->
+                            <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                        </Grid>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.TitleHeight}"
+                    GlassFrameThickness="0"
+                    ResizeBorderThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ResizeBorderThickness}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Main Window Style (Performance Efficient)-->
+    <Style TargetType="{x:Type Window}" x:Key="BaseWindowStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="260"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Blur overlay  -->
+                        <!--<Grid.Effect>
+                            <BlurEffect KernelType="Gaussian" Radius="0" />
+                        </Grid.Effect>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"
+                                                            To="4"
+                                                            Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)"
+                                                            To="0"
+                                                            Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>-->
+
+                        <!--  Dim Overlay  -->
+                        <Grid Panel.ZIndex="1" Grid.ColumnSpan="5" Grid.RowSpan="2"
+                              Background="Black"
+                              IsHitTestVisible="False"
+                              Opacity="0">
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.IsBlurOverlayVisible}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0.6"
+                                                                Duration="0:0:0.1" />
+
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                To="0"
+                                                                Duration="0:0:0.1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                        </Grid>
+
+                        <!--Application Icon-->
+                        <Border Background="{StaticResource SecondaryColorBrush}"
+                                Grid.Column="0" Margin="0">
+                            <Image Margin="10"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   Source="/School_Manager;component/Resources/infinityLogo.png"
+                                   />
+                        </Border>
+
+                        <!--  Title  -->
+                        <Viewbox Grid.Column="1" Margin="0">
+                            <TextBlock Margin="0,8" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+                        </Viewbox>
+
+                        <!--  Window Buttons  -->
+                        <Button Grid.Column="2"
+                                Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.MinimizedCommand}"
+                                Content="_"
+                                Foreground="Gray"
+                                Style="{StaticResource WindowControlButton}" />
+                        <Button Grid.Column="3"
+                                Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.MaximizedCommand}"
+                                Content="[ ]"
+                                Foreground="Gray"
+                                Style="{StaticResource WindowControlButton}" />
+                        <Button Grid.Column="4"
+                                Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.CloseCommand}"
+                                Content="X"
+                                Foreground="Gray"
+                                Style="{StaticResource WindowCloseButton}" />
+
+                        <!--Content-->
+                        <ContentPresenter Grid.Row="1" Grid.ColumnSpan="5" Content="{TemplateBinding Content}" />
+                        
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.TitleHeight}"
+                    GlassFrameThickness="0" CornerRadius="0" NonClientFrameEdges="None"
+                    ResizeBorderThickness="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ResizeBorderThickness}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

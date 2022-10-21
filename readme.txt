@@ -1,1 +1,5 @@
-"Fri Nov 29 2019 09:57:17 GMT+0900 (Yakutsk Standard Time)" 
+Admin Password:
+123
+
+Key (Porduct ID: 0000):
+CB25-FDD6-HGLD-P1CI

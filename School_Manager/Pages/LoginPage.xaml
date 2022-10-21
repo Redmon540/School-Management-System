@@ -1,0 +1,87 @@
+﻿<local:BasePage
+    x:Class="School_Manager.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:School_Manager"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Page"
+    Title="LoginPage"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
+    x:TypeArguments="local:LoginViewModel"
+    mc:Ignorable="d">
+   
+    <Grid
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        TextBlock.TextAlignment="Center">
+
+
+        <Border Background="{StaticResource LightColorBrush}" CornerRadius="20">
+
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect
+                    Opacity="0.3"
+                    ShadowDepth="10"
+                    Softness="10" />
+            </Border.BitmapEffect>
+
+            <StackPanel Margin="50,20,50,20">
+                <!--  Header  -->
+                <TextBlock
+                    Margin="0,0,0,20"
+                    FontSize="{StaticResource FontSizeExtraLarge}"
+                    Text="Log in" />
+
+                <!--  Username  -->
+                <ComboBox ItemsSource="{Binding Accounts}"
+                          HorizontalContentAlignment="Left"
+                          materialDesign:ComboBoxAssist.ClassicMode ="True"
+                          SelectedItem="{Binding SelectedAccount}"
+                          Padding="5"
+                          VerticalAlignment="Bottom"
+                          materialDesign:HintAssist.Hint="Select User"
+                          FontSize="{StaticResource FontSizeRegular}"
+                          Margin="0 0 0 0" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding AccountName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+
+                <!--  Pasword  -->
+                <PasswordBox
+                    x:Name="PasswordText"
+                    Margin="0,10,0,0"
+                    Padding="5"
+                    HorizontalContentAlignment="Left"
+                    materialDesign:HintAssist.FloatingOffset="0 -30"
+                    materialDesign:HintAssist.Hint="Password"
+                    materialDesign:HintAssist.IsFloating="True"
+                    FontSize="{StaticResource FontSizeRegular}" />
+
+                <Button
+                    Margin="0,20,0,0"
+                    Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding ElementName=Page}"
+                    Content="Log in"
+                    FontSize="{StaticResource FontSizeLarge}" />
+
+                <!--  Button  -->
+                <Button
+                    Margin="0,0,0,0"
+                    Command="{Binding GotoSignUpCommand}"
+                    Content="Don't have an account? Create now!"
+                    Style="{StaticResource LinkButton}" />
+            </StackPanel>
+
+        </Border>
+    </Grid>
+
+</local:BasePage>
+

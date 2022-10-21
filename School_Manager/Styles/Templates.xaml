@@ -1,0 +1,2921 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:School_Manager"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+   
+    <!--  Action Column for datagrid  -->
+    <DataTemplate x:Key="ActionColumnTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Width="20"
+                Margin="0,0,10,0"
+                Command="{Binding DataContext.ViewCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                Content="{StaticResource ViewIcon}"
+                Foreground="{StaticResource DarkGrayBrush}"
+                Style="{StaticResource IconGrowButton}" />
+
+            <Button
+                Width="20"
+                Margin="0,0,10,0"
+                Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                Content="{StaticResource EditIcon}"
+                Foreground="{StaticResource GreenColorBrush}"
+                Style="{StaticResource IconGrowButton}" />
+
+            <Button
+                Width="20"
+                Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                Content="{StaticResource DeleteBinIcon}"
+                Foreground="{StaticResource RedColorBrush}"
+                Style="{StaticResource IconGrowButton}" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="ViewFeeRecordTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Width="20"
+                Margin="0,0,10,0"
+                Command="{Binding DataContext.ViewCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                Content="{StaticResource ViewIcon}"
+                Foreground="{StaticResource PrimaryColorBrush}"
+                Style="{StaticResource IconGrowButton}"
+                ToolTip="View Fee Details" />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--  Total / Fee Status Template  -->
+    <DataTemplate x:Key="TotalTemplate">
+        <Border
+            Name="border"
+            Padding="5,2"
+            BorderBrush="{StaticResource GreenColorBrush}"
+            BorderThickness="1"
+            CornerRadius="2">
+            <TextBlock
+                Name="text"
+                Foreground="{StaticResource GreenColorBrush}"
+                Text="{Binding Total}" />
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding FeeStatus}" Value="DUE">
+                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource RedColorBrush}" />
+                <Setter TargetName="text" Property="Foreground" Value="{StaticResource RedColorBrush}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding FeeStatus}" Value="PENDING">
+                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource YellowColorBrush}" />
+                <Setter TargetName="text" Property="Foreground" Value="{StaticResource YellowColorBrush}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <DataTemplate x:Key="TotalFillTemplate">
+        <Border
+            Name="border"
+            Padding="5,2"
+            CornerRadius="5">
+            <Border.Background>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Color="{StaticResource GreenColor}" />
+                    <GradientStop Offset="1" Color="{StaticResource DarkGreenColor}" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource LightColorBrush}"
+                Text="{Binding Total}" />
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding FeeStatus}" Value="DUE">
+                <Setter TargetName="border" Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="{StaticResource RedColor}" />
+                            <GradientStop Offset="1" Color="{StaticResource DarkRedColor}" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding FeeStatus}" Value="PENDING">
+                <Setter TargetName="border" Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="{StaticResource YellowColor}" />
+                            <GradientStop Offset="1" Color="{StaticResource DarkYellowColor}" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+
+    <Style x:Key="FeeTemplate" TargetType="{x:Type Label}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border
+                        Name="border"
+                        Padding="5,2"
+                        CornerRadius="8">
+                        <Border.Background>
+                            <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="{StaticResource GreenColor}" />
+                                <GradientStop Offset="1" Color="{StaticResource DarkGreenColor}" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource LightColorBrush}"
+                            Text="{Binding FeeStatus}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding FeeStatus}" Value="DUE">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="{StaticResource RedColor}" />
+                                        <GradientStop Offset="1" Color="{StaticResource DarkRedColor}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FeeStatus}" Value="PENDING">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="{StaticResource YellowColor}" />
+                                        <GradientStop Offset="1" Color="{StaticResource DarkYellowColor}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FeeStatus}" Value="PARTIALLY PAID">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="{StaticResource LightRedColor}" />
+                                        <GradientStop Offset="1" Color="{StaticResource LightRedColor}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="FeeStatusTemplate">
+        <Border
+            Name="border"
+            Padding="5,2"
+            CornerRadius="5">
+            <Border.Background>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Color="{StaticResource GreenColor}" />
+                    <GradientStop Offset="1" Color="{StaticResource DarkGreenColor}" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <TextBlock
+                FontWeight="SemiBold"
+                Foreground="{StaticResource LightColorBrush}"
+                Text="{Binding FeeStatus}" />
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding FeeStatus}" Value="DUE">
+                <Setter TargetName="border" Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="{StaticResource RedColor}" />
+                            <GradientStop Offset="1" Color="{StaticResource DarkRedColor}" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding FeeStatus}" Value="PENDING">
+                <Setter TargetName="border" Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="{StaticResource YellowColor}" />
+                            <GradientStop Offset="1" Color="{StaticResource DarkYellowColor}" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--Fee Pay Template-->
+    <Style x:Key="FeePayTemplate" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="5 12"/>
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        
+                    <Border
+                        Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="8">
+                        <Border.Background>
+                            <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="{StaticResource GreenColor}" />
+                                <GradientStop Offset="1" Color="{StaticResource DarkGreenColor}" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        
+                    </Border>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{TemplateBinding Content}"
+                            Focusable="False" Foreground="{StaticResource LightColorBrush}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            FontWeight="SemiBold"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding FeeStatus}" Value="PAID">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="{StaticResource DarkGray}" />
+                                        <GradientStop Offset="1" Color="{StaticResource VeryDarkGray}" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Paid Unpaid button for fee collection  -->
+    <Style x:Key="FeeButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Width" Value="70" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Command" Value="{Binding DataContext.FeeButtonCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" />
+        <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border x:Name="border" CornerRadius="10">
+                                    <Border.Style>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Color="#FF72FF63" />
+                                                        <GradientStop Offset="1" Color="#FF239100" />
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" Value="DUE">
+                                                    <Setter Property="Background">
+                                                        <Setter.Value>
+                                                            <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <GradientStop Color="#FFFF504A" />
+                                                                <GradientStop Offset="1" Color="#FFB70600" />
+                                                            </LinearGradientBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Attendence Template  -->
+    <Style x:Key="AttendenceButton1" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="border" CornerRadius="5" Padding="5">
+                            <Border.Background>
+                                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#00c939" />
+                                    <GradientStop Offset="1" Color="#FF239100" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <TextBlock Text="{Binding}" FontWeight="SemiBold" TextAlignment="Center" Foreground="{StaticResource LightColorBrush}"/>
+                        </Border>
+                        <TextBlock x:Name="text" Visibility="Collapsed" Text="-" FontWeight="SemiBold" Foreground="{StaticResource DarkGrayBrush}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="A">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="#FFFF504A" />
+                                        <GradientStop Offset="1" Color="#FFB70600" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="L">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="#FFF200" />
+                                        <GradientStop Offset="1" Color="#d8c800" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                            <Setter TargetName="text" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="border" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AttendenceButton" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="border" CornerRadius="5" Padding="5" Background="{StaticResource DarkGreenColorBrush}">
+                           
+                            <TextBlock Text="{Binding}" FontWeight="SemiBold" TextAlignment="Center" Foreground="{StaticResource LightColorBrush}"/>
+                        </Border>
+                        <TextBlock x:Name="text" Visibility="Collapsed" Text="-" FontWeight="SemiBold" Foreground="{StaticResource DarkGrayBrush}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="A">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource RedColorBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="L">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource DarkYellowColorBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                            <Setter TargetName="text" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="border" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Text Entry Control Template-->
+    <Style x:Key="EditableTextItems" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Visibility="{Binding IsEditing,Converter={local:BoolToVisibilityConverter}}"
+                                 VerticalAlignment="Center"
+                                 Padding="2.6 0 0 0"
+                                 Grid.Column="0"
+                                 Text="{Binding Text}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                                <KeyBinding Key="Esc" Command="{Binding DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <TextBlock Grid.Column="0" 
+                                   Visibility="{Binding IsEditing,Converter={local:BoolToInverseVisibilityConverter}}"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Text}"
+                                   Margin="5"/>
+                        <Grid Grid.Column="1" Margin="20 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0"
+                                    Margin="0 0 5 0"
+                                    Style="{StaticResource IconGrowButton}"
+                                    Content="{Binding EditIcon}" 
+                                    FontSize="{StaticResource FontSizeSmall}"
+                                    Foreground="{StaticResource GreenColorBrush}"
+                                    VerticalAlignment="Center"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding IsEnabled}"
+                                    Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource IconGrowButton}"
+                                    Content="{Binding DeleteIcon}" 
+                                    FontSize="{StaticResource FontSizeSmall}"
+                                    VerticalAlignment="Center"
+                                    IsEnabled="{Binding IsEnabled}"
+                                    Foreground="{StaticResource  RedColorBrush}"
+                                    Command="{Binding DataContext.DeleteCommand, 
+                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                    CommandParameter="{Binding}"/>
+
+                        </Grid>
+                    </Grid>
+
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Record list edit template for student,parent,fee tables  -->
+    <Style x:Key="EditRecordsItemTemplate" TargetType="{x:Type ItemsControl}">
+        <Style.Resources>
+            <!--  Data Template for Textbox Entities  -->
+            <DataTemplate DataType="{x:Type local:TextEntity}">
+                <StackPanel>
+                    <TextBox IsEnabled="{Binding IsEnabled}"
+                             Margin="0,30,40,0"
+                             Padding="2"
+                             VerticalAlignment="Bottom"
+                             materialDesign:HintAssist.FloatingOffset="0 -28"
+                             materialDesign:HintAssist.FloatingScale="1"
+                             materialDesign:HintAssist.HintOpacity="1"
+                             FontSize="{StaticResource FontSizeSmall}"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                    <materialDesign:HintAssist.Hint>
+                        <TextBlock FontWeight="Medium"
+                                   Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"
+                                   Text="{Binding FeildName}" />
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for List Entities  -->
+            <DataTemplate DataType="{x:Type local:ListEntity}">
+                <StackPanel>
+                    <ComboBox IsEnabled="{Binding IsEnabled}"
+                        Margin="0,30,40,0"
+                        Padding="10"
+                        VerticalAlignment="Bottom"
+                        materialDesign:ComboBoxAssist.ClassicMode="True"
+                        materialDesign:HintAssist.FloatingOffset="0 -20"
+                        materialDesign:HintAssist.FloatingScale="1"
+                        materialDesign:HintAssist.HintOpacity="1"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        ItemsSource="{Binding Items}"
+                        SelectedItem="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock
+                                FontWeight="Medium"
+                                Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"
+                                Text="{Binding FeildName}" />
+                        </materialDesign:HintAssist.Hint>
+                    </ComboBox>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for Date Entities  -->
+            <DataTemplate DataType="{x:Type local:DateEntity}">
+                <StackPanel>
+                    <DatePicker IsEnabled="{Binding IsEnabled}"
+                        Margin="0,40,40,0"
+                        VerticalAlignment="Bottom"
+                        materialDesign:HintAssist.FloatingOffset="0 -20"
+                        materialDesign:HintAssist.FloatingScale="1"
+                        materialDesign:HintAssist.HintOpacity="100"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        SelectedDate="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                        >
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock
+                                FontWeight="Medium"
+                                Foreground="{StaticResource PrimaryColorBrush}"
+                                Text="{Binding FeildName}" />
+                        </materialDesign:HintAssist.Hint>
+                    </DatePicker>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for ParentID Entities  -->
+            <DataTemplate DataType="{x:Type local:ParentIDEntity}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBox IsEnabled="{Binding IsEnabled}"
+                                Margin="0,30,0,0"
+                                Padding="2"
+                                VerticalAlignment="Bottom"
+                                materialDesign:HintAssist.FloatingOffset="0 -28"
+                                materialDesign:HintAssist.FloatingScale="1"
+                                materialDesign:HintAssist.HintOpacity="1"
+                                FontSize="{StaticResource FontSizeSmall}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                            <materialDesign:HintAssist.Hint>
+                                <TextBlock
+                                FontWeight="Medium"
+                                Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"
+                                Text="{Binding FeildName}" />
+                            </materialDesign:HintAssist.Hint>
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding DataContext.SearchParentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                                            CommandParameter="{Binding}"
+                                            Key="Return"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <TextBlock
+                            Text="{Binding AlertText}"
+                            FontSize="{StaticResource FontSizeVerySmall}"
+                            FontWeight="Regular"
+                            Foreground="{StaticResource RedColorBrush}"
+                            Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+
+                    </StackPanel>
+                    <Button Grid.Column="1"
+                            Margin="10,30,40,0"
+                            VerticalAlignment="Center"
+                            Command="{Binding DataContext.SearchParentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                            CommandParameter="{Binding}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource IconGrowButton}" TargetType="{x:Type Button}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                        <Setter Property="Content" Value="{StaticResource SearchIcon}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="Content" Value="{StaticResource EditIcon}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </DataTemplate>
+            
+        </Style.Resources>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Margin="10" Columns="4" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Record list view template for student,parent,teachers & fee tables  -->
+    <Style x:Key="ViewRecordsItemTemplate" TargetType="{x:Type ItemsControl}">
+        <Style.Resources>
+            <!--Data Template for View Only entities-->
+            <DataTemplate DataType="{x:Type local:DisabledTextEntity}">
+                <StackPanel Margin="10 0">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10">
+                        <TextBlock Text="{Binding Value}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{StaticResource VeryDarkGrayBrush}"
+                                   FontSize="{StaticResource FontSizeMedium}"/>
+                    </Border>
+                </StackPanel>
+            </DataTemplate>
+        </Style.Resources>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Margin="10" Columns="2" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--New Admit student items template-->
+    <Style x:Key="EditRecords" TargetType="{x:Type ItemsControl}">
+        <Style.Resources>
+            <!--  Data Template for Textbox Entities  -->
+            <DataTemplate DataType="{x:Type local:TextEntity}">
+                <StackPanel Margin="0 10 40 0">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <TextBox Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{StaticResource VeryDarkGrayBrush}"
+                                 FontSize="{StaticResource FontSizeMedium}"
+                                 BorderThickness="0"
+                                 IsEnabled="{Binding IsEnabled}"/>
+                    </Border>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for List Entities  -->
+            <DataTemplate DataType="{x:Type local:ListEntity}">
+                <StackPanel  Margin="0 10 40 0">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <ComboBox IsEnabled="{Binding IsEnabled}"
+                                  materialDesign:ComboBoxAssist.ClassicMode="True"
+                                  FontSize="{StaticResource FontSizeSmall}"
+                                  ItemsSource="{Binding Items}"
+                                  SelectedItem="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                  BorderThickness="0"/>
+                    </Border>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for Date Entities  -->
+            <DataTemplate DataType="{x:Type local:DateEntity}">
+                <StackPanel Margin="0 10 40 0">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <DatePicker IsEnabled="{Binding IsEnabled}"
+                                    FontSize="{StaticResource FontSizeSmall}"
+                                    SelectedDate="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                    BorderThickness="0"/>
+                    </Border>
+                    <TextBlock Text="{Binding AlertText}"
+                                   FontSize="{StaticResource FontSizeVerySmall}"
+                                   FontWeight="Regular"
+                                   Foreground="{StaticResource RedColorBrush}"
+                                   Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--Data Template for View Only entities-->
+            <DataTemplate DataType="{x:Type local:DisabledTextEntity}">
+                <StackPanel Margin="10 0">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10">
+                        <TextBlock Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{StaticResource VeryDarkGrayBrush}"
+                                   FontSize="{StaticResource FontSizeMedium}"/>
+                    </Border>
+                </StackPanel>
+            </DataTemplate>
+            
+            <!--  Data Template for ParentID Entities  -->
+            <DataTemplate DataType="{x:Type local:ParentIDEntity}">
+                    <StackPanel Margin="0 10 40 0">
+                        <TextBlock Text="{Binding FeildName}"
+                                   Padding="10 10 10 0"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryColorBrush}"
+                                   FontSize="{StaticResource FontSizeMedium}"/>
+                        <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding Value ,UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding IsEnabled}"
+                                     Foreground="{StaticResource VeryDarkGrayBrush}"
+                                     FontSize="{StaticResource FontSizeMedium}"
+                                     BorderThickness="0">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Command="{Binding DataContext.SearchParentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                                            CommandParameter="{Binding}"
+                                            Key="Return"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+                            <Button Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding DataContext.SearchParentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                                    CommandParameter="{Binding}">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource IconGrowButton}" TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                                <Setter Property="Content" Value="{StaticResource SearchIcon}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                <Setter Property="Content" Value="{StaticResource EditIcon}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </Border>
+                        <TextBlock
+                            Text="{Binding AlertText, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="{StaticResource FontSizeVerySmall}"
+                            FontWeight="Regular"
+                            Foreground="{StaticResource RedColorBrush}"
+                            Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+
+                    </StackPanel>
+               
+            </DataTemplate>
+
+        </Style.Resources>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Margin="10" Columns="3" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--New Admit student items template-->
+    <Style x:Key="EditRecordsDialog" TargetType="{x:Type ItemsControl}">
+        <Style.Resources>
+            <!--  Data Template for Textbox Entities  -->
+            <DataTemplate DataType="{x:Type local:TextEntity}">
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <TextBox Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                 Foreground="{StaticResource VeryDarkGrayBrush}"
+                                 FontSize="{StaticResource FontSizeMedium}"
+                                 BorderThickness="0"
+                                 IsEnabled="{Binding IsEnabled}"/>
+                    </Border>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for List Entities  -->
+            <DataTemplate DataType="{x:Type local:ListEntity}">
+                <StackPanel  Margin="10">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <ComboBox IsEnabled="{Binding IsEnabled}"
+                                  materialDesign:ComboBoxAssist.ClassicMode="True"
+                                  FontSize="{StaticResource FontSizeSmall}"
+                                  ItemsSource="{Binding Items}"
+                                  SelectedItem="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                  BorderThickness="0"/>
+                    </Border>
+                    <TextBlock
+                        Text="{Binding AlertText}"
+                        FontSize="{StaticResource FontSizeVerySmall}"
+                        FontWeight="Regular"
+                        Foreground="{StaticResource RedColorBrush}"
+                        Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for Date Entities  -->
+            <DataTemplate DataType="{x:Type local:DateEntity}">
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                        <DatePicker IsEnabled="{Binding IsEnabled}"
+                                    FontSize="{StaticResource FontSizeSmall}"
+                                    SelectedDate="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                    BorderThickness="0"/>
+                    </Border>
+                    <TextBlock Text="{Binding AlertText}"
+                                   FontSize="{StaticResource FontSizeVerySmall}"
+                                   FontWeight="Regular"
+                                   Foreground="{StaticResource RedColorBrush}"
+                                   Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!--Data Template for View Only entities-->
+            <DataTemplate DataType="{x:Type local:DisabledTextEntity}">
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding FeildName}"
+                               Padding="10 10 10 0"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryColorBrush}"
+                               FontSize="{StaticResource FontSizeMedium}"/>
+                    <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10">
+                        <TextBlock Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{StaticResource VeryDarkGrayBrush}"
+                                   FontSize="{StaticResource FontSizeMedium}"/>
+                    </Border>
+                </StackPanel>
+            </DataTemplate>
+
+            <!--  Data Template for ParentID Entities  -->
+            <DataTemplate DataType="{x:Type local:ParentIDEntity}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0" Grid.Column="0">
+                        <TextBlock Text="{Binding FeildName}"
+                                   Padding="10 10 10 0"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryColorBrush}"
+                                   FontSize="{StaticResource FontSizeMedium}"/>
+                        <Border Background="{StaticResource VeryLightGrayBrush}"
+                            CornerRadius="10" Padding="10 5">
+                            <TextBox Text="{Binding Value ,UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding IsEnabled}"
+                                     Foreground="{StaticResource VeryDarkGrayBrush}"
+                                     FontSize="{StaticResource FontSizeMedium}"
+                                     BorderThickness="0">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Command="{Binding DataContext.SearchParentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                                            CommandParameter="{Binding}"
+                                            Key="Return"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+                        </Border>
+                        <TextBlock
+                            Text="{Binding AlertText}"
+                            FontSize="{StaticResource FontSizeVerySmall}"
+                            FontWeight="Regular"
+                            Foreground="{StaticResource RedColorBrush}"
+                            Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+
+                    </StackPanel>
+                    <Button Grid.Column="1"
+                            Margin="10,70,40,0"
+                            VerticalAlignment="Top"
+                            Command="{Binding DataContext.SearchParentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                            CommandParameter="{Binding}">
+                        <Button.Style>
+                            <Style BasedOn="{StaticResource IconGrowButton}" TargetType="{x:Type Button}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                        <Setter Property="Content" Value="{StaticResource SearchIcon}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="Content" Value="{StaticResource EditIcon}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+
+            </DataTemplate>
+
+        </Style.Resources>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="IDCardSheetStyle" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Height="29.7cm" Width="21cm" Columns="2" Rows="5"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="IDCardViewerStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border x:Name="content" Cursor="Hand">
+                        
+                        <Viewbox Height="200">
+                            <ContentPresenter Content="{Binding}"/>
+                        </Viewbox>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="content"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1.2"
+                                        Duration="0:0:0.15" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="content"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1.2"
+                                        Duration="0:0:0.15" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="content"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1"
+                                        Duration="0:0:0.15" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="content"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1"
+                                        Duration="0:0:0.15" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                        <WrapPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBoxWithLabel" TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid Visibility="{TemplateBinding Visibility}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding FeildName,UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="0"
+                                   Padding="10 10 10 0"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryColorBrush}"
+                                   FontSize="{StaticResource FontSizeMedium}"/>
+                       
+                        <Border Background="{StaticResource VeryLightGrayBrush}"
+                                CornerRadius="10" Padding="10 2"
+                                Grid.Column="1">
+                            <TextBox Text="{Binding Value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Foreground="{StaticResource VeryDarkGrayBrush}"
+                                     FontSize="{StaticResource FontSizeMedium}"
+                                     BorderThickness="0"
+                                     IsEnabled="{Binding IsEnabled}"/>
+                        </Border>
+                        <TextBlock Text="{Binding AlertText}"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   FontSize="{StaticResource FontSizeVerySmall}"
+                                   FontWeight="Regular"
+                                   Foreground="{StaticResource RedColorBrush}"
+                                   Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBoxWithLabelVertical" TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <StackPanel Visibility="{TemplateBinding Visibility}">
+                        <TextBlock Text="{Binding FeildName,UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Row="0"
+                                   Padding="0 0 0 2"
+                                   TextAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryColorBrush}"
+                                   FontSize="{TemplateBinding FontSize}"/>
+
+                        <Border Background="{StaticResource VeryLightGrayBrush}"
+                                CornerRadius="10" Padding="10 0">
+                            <TextBox Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                     Foreground="{StaticResource VeryDarkGrayBrush}"
+                                     FontSize="{TemplateBinding FontSize}"
+                                     BorderThickness="0"
+                                     IsEnabled="{Binding IsEnabled}"/>
+                        </Border>
+                        <TextBlock Text="{Binding AlertText}"
+                                   FontSize="{StaticResource FontSizeVerySmall}"
+                                   FontWeight="Regular"
+                                   Foreground="{StaticResource RedColorBrush}"
+                                   Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ComboBoxValidationTemplate" TargetType="{x:Type ComboBox}">
+        <Setter Property="Tag" Value="{Binding Text}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}"/>
+        <Setter Property="Background" Value="{StaticResource VeryLightGrayBrush}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="10 10 10 5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <StackPanel Visibility="{TemplateBinding Visibility}">
+                        <TextBlock Text="{Binding FeildName}"
+                                   HorizontalAlignment="Center"
+                                   Padding="{TemplateBinding Margin}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryColorBrush}"
+                                   FontSize="{TemplateBinding FontSize}"/>
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10" Padding="10 0">
+                            <ComboBox IsEnabled="{Binding IsEnabled}" 
+                                      SelectedItem="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                      materialDesign:ComboBoxAssist.ClassicMode="True"
+                                      FontSize="{TemplateBinding FontSize}"
+                                      ItemsSource="{Binding Items}"  Text="{Binding Text}"
+                                      BorderThickness="0" IsEditable="{Binding IsEditable}"/>
+                        </Border>
+                        <TextBlock Text="{Binding AlertText}"
+                                   FontSize="{StaticResource FontSizeVerySmall}"
+                                   FontWeight="Regular"
+                                   Foreground="{StaticResource RedColorBrush}"
+                                   Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DatePickerTemplate" TargetType="{x:Type DatePicker}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}"/>
+        <Setter Property="Background" Value="{StaticResource VeryLightGrayBrush}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="10 10 10 5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DatePicker}">
+                    <StackPanel Visibility="{TemplateBinding Visibility}">
+                        <TextBlock Text="{Binding FeildName}"
+                                   HorizontalAlignment="Center"
+                                   Padding="{TemplateBinding Margin}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryColorBrush}"
+                                   FontSize="{TemplateBinding FontSize}"/>
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10" Padding="10 0">
+                            <DatePicker IsEnabled="{Binding IsEnabled}"
+                                        materialDesign:ComboBoxAssist.ClassicMode="True"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        SelectedDate="{Binding DueDate, UpdateSourceTrigger=PropertyChanged}"
+                                        BorderThickness="0"/>
+                        </Border>
+                        <TextBlock Text="{Binding AlertText}"
+                                   FontSize="{StaticResource FontSizeVerySmall}"
+                                   FontWeight="Regular"
+                                   Foreground="{StaticResource RedColorBrush}"
+                                   Visibility="{Binding IsValid, Converter={local:BoolToInverseVisibilityConverter}}" />
+                    </StackPanel>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--Column Mapping-->
+    <Style x:Key="ParentColumnMapTemplate" TargetType="{x:Type ItemsControl}">
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border Name="Row" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding FeildName}" HorizontalAlignment="Left" 
+                                       VerticalAlignment="Center" Margin="15 0 0 0"/>
+                            <CheckBox IsChecked="{Binding IsChecked}" Cursor="Hand" Content="Match"
+                                      Visibility="{Binding DataContext.IsMatchVisible, 
+                                RelativeSource={RelativeSource Mode=FindAncestor,
+                                 AncestorType={x:Type local:BasePage}}
+                                ,Converter={local:BoolToVisibilityConverter}}" 
+                                      Margin="5 0" HorizontalAlignment="Left" Grid.Column="1"/>
+                            <ComboBox IsEnabled="{Binding IsEnabled}" Grid.Column="2"
+                                      materialDesign:ComboBoxAssist.ClassicMode="True"
+                                      ItemsSource="{Binding Items}"
+                                      SelectedItem="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                      BorderThickness="0" Cursor="Hand" MaxWidth="150" MinWidth="100" 
+                                      HorizontalAlignment="Right" Margin="0 0 15 0"/>
+                        </Grid>
+                    </Border>
+                    <!--Alternating row color for records-->
+                    <DataTemplate.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" TargetName="Row">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource VeryLightGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" TargetName="Row">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource LightGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColumnMapTemplate" TargetType="{x:Type ItemsControl}">
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border Name="Row" Padding="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding FeildName}" HorizontalAlignment="Left" 
+                                       VerticalAlignment="Center" Margin="15 0 0 0"/>
+                            <ComboBox IsEnabled="{Binding IsEnabled}" Grid.Column="1"
+                                      materialDesign:ComboBoxAssist.ClassicMode="True"
+                                      ItemsSource="{Binding Items}"
+                                      SelectedItem="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                      BorderThickness="0" Cursor="Hand" MaxWidth="150" MinWidth="100"
+                                      HorizontalAlignment="Right" Margin="0 0 15 0"/>
+                    </Grid>
+                    </Border>
+                <!--Alternating row color for records-->
+                <DataTemplate.Triggers>
+                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                        <Setter Property="Background" TargetName="Row">
+                            <Setter.Value>
+                                <SolidColorBrush Color="{StaticResource VeryLightGray}"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                        <Setter Property="Background" TargetName="Row">
+                            <Setter.Value>
+                                <SolidColorBrush Color="{StaticResource LightGray}"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--Student/Parent Info Structure-->
+    <Style x:Key="InfoStructure" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Content}" IsChecked="{Binding IsChecked}" 
+                              Margin="10 5" IsEnabled="{Binding IsEnabled}" Cursor="Hand"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="CustomStudentColumn" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Border CornerRadius="5"
+                                    BorderBrush="{StaticResource VeryDarkGrayBrush}"
+                                    BorderThickness="1"
+                                    Background="{StaticResource VeryLightGrayBrush}"
+                                    Width="200"
+                                    Margin="10" 
+                                    Padding="10"
+                                    HorizontalAlignment="Left">
+                                <TextBox materialDesign:HintAssist.Hint="{Binding FeildName}"
+                                         Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="{StaticResource SecondaryColorBrush}"
+                                         FontSize="{StaticResource FontSizeRegular}"/>
+
+                            </Border>
+                            <Border Margin="10" IsHitTestVisible="False" 
+                                    CornerRadius="5"
+                                    Background="{StaticResource RedColorBrush}" Opacity="0.1"
+                                    Visibility="{Binding IsValid , Converter={local:BoolToInverseVisibilityConverter}}"/>
+
+                        </Grid>
+
+                        <Button Style="{StaticResource IconGrowButton}"
+                                Grid.Column="1"
+                                Content="{StaticResource CrossIcon}"
+                                VerticalAlignment="Top"
+                                Margin="0 10 0 0"
+                                Foreground="{StaticResource RedColorBrush}"
+                                Command="{Binding DataContext.RemoveStudentColumnCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                CommandParameter="{Binding}"/>
+                    </Grid>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CustomParentColumn" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Border CornerRadius="5"
+                                    BorderBrush="{StaticResource VeryDarkGrayBrush}"
+                                    BorderThickness="1"
+                                    Background="{StaticResource VeryLightGrayBrush}"
+                                    Width="200"
+                                    Margin="10" 
+                                    Padding="10"
+                                    HorizontalAlignment="Left">
+                                <TextBox materialDesign:HintAssist.Hint="{Binding FeildName}"
+                                         Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="{StaticResource SecondaryColorBrush}"
+                                         FontSize="{StaticResource FontSizeRegular}"/>
+
+                            </Border>
+                            <Border Margin="10" IsHitTestVisible="False" 
+                                    CornerRadius="5"
+                                    Background="{StaticResource RedColorBrush}" Opacity="0.1"
+                                    Visibility="{Binding IsValid , Converter={local:BoolToInverseVisibilityConverter}}"/>
+
+                        </Grid>
+
+                        <Button Style="{StaticResource IconGrowButton}"
+                                Grid.Column="1"
+                                Content="{StaticResource CrossIcon}"
+                                VerticalAlignment="Top"
+                                Margin="0 10 0 0"
+                                Foreground="{StaticResource RedColorBrush}"
+                                Command="{Binding DataContext.RemoveParentColumnCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                CommandParameter="{Binding}"/>
+                    </Grid>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--Fee item template-->
+    <Style x:Key="FeeItemsCollectionTemplate" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Fee Item-->
+                            <Border CornerRadius="5"
+                                    BorderBrush="{StaticResource VeryDarkGrayBrush}"
+                                    BorderThickness="1"
+                                    Background="{StaticResource VeryLightGrayBrush}"
+                                    Width="200"
+                                    Margin="10" 
+                                    Padding="10"
+                                    HorizontalAlignment="Left">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <!--Feild Names-->
+                                <TextBlock Text="Amount" Grid.Row="1" VerticalAlignment="Bottom"
+                                         Foreground="{StaticResource VeryDarkGrayBrush}"
+                                         FontSize="{StaticResource FontSizeSmall}"/>
+                                <TextBlock Text="Late Fee" Grid.Row="2" VerticalAlignment="Bottom"
+                                         Foreground="{StaticResource VeryDarkGrayBrush}"
+                                           FontSize="{StaticResource FontSizeSmall}"/>
+                                <TextBlock Text="Due Date" Grid.Row="3" VerticalAlignment="Bottom"
+                                           Foreground="{StaticResource VeryDarkGrayBrush}"
+                                           FontSize="{StaticResource FontSizeSmall}"/>
+                                
+                                <!--Values-->
+                                <TextBox Text="{Binding Fee}" Grid.ColumnSpan="2" TextAlignment="Center"
+                                         materialDesign:HintAssist.Hint="Fee Name"
+                                         Foreground="{StaticResource SecondaryColorBrush}"
+                                         FontSize="{StaticResource FontSizeMedium}"/>
+                                <TextBox Margin="0 5 0 0" Grid.Row="1" Grid.Column="1"
+                                         Text="{Binding Amount}"
+                                         FontSize="{StaticResource FontSizeSmall}"
+                                         FontWeight="SemiBold"/>
+
+                                <TextBox Margin="0 5 0 0" Grid.Row="2" Grid.Column="1"
+                                         Text="{Binding LateFee}"
+                                         FontSize="{StaticResource FontSizeSmall}"
+                                         FontWeight="SemiBold"/>
+                                <ComboBox Margin="0 5 0 0" Grid.Row="3" Grid.Column="1"
+                                          SelectedItem="{Binding DueDate}"
+                                          ItemsSource="{Binding DataContext.DueDates ,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:BasePage}}"
+                                          FontSize="{StaticResource FontSizeSmall}"
+                                          FontWeight="SemiBold" Cursor="Hand"
+                                          materialDesign:ComboBoxAssist.ClassicMode="True"/>
+                            </Grid>
+                            </Border>
+                            <Border Margin="10" IsHitTestVisible="False" 
+                                    CornerRadius="5"
+                                    Background="{StaticResource RedColorBrush}" Opacity="0.1"
+                                    Visibility="{Binding IsValid , Converter={local:BoolToInverseVisibilityConverter}}"/>
+                        <!--Delete Button-->
+                        <Button Style="{StaticResource IconGrowButton}"
+                                Grid.Column="2"
+                                Content="{StaticResource CrossIcon}"
+                                VerticalAlignment="Top"
+                                Margin="0 10 0 0"
+                                Foreground="{StaticResource RedColorBrush}"
+                                Command="{Binding DataContext.RemoveFeeCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                CommandParameter="{Binding}"/>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Section item template-->
+    <Style x:Key="SectionItemsTemplate" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+
+                            <Border CornerRadius="5"
+                                    BorderBrush="{StaticResource VeryDarkGrayBrush}"
+                                    BorderThickness="1"
+                                    Background="{StaticResource VeryLightGrayBrush}"
+                                    Width="200"
+                                    Margin="10" 
+                                    Padding="10"
+                                    HorizontalAlignment="Left">
+                                <TextBox materialDesign:HintAssist.Hint="Section Name"
+                                         Text="{Binding Value,UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="{StaticResource SecondaryColorBrush}"
+                                         FontSize="{StaticResource FontSizeRegular}"/>
+
+                            </Border>
+                            <Border Margin="10" IsHitTestVisible="False" 
+                                    CornerRadius="5"
+                                    Background="{StaticResource RedColorBrush}" Opacity="0.1"
+                                    Visibility="{Binding IsValid , Converter={local:BoolToInverseVisibilityConverter}}"/>
+
+                        </Grid>
+
+                        <Button Style="{StaticResource IconGrowButton}"
+                                Grid.Column="1"
+                                Content="{StaticResource CrossIcon}"
+                                VerticalAlignment="Top"
+                                Margin="0 10 0 0"
+                                Foreground="{StaticResource RedColorBrush}"
+                                Command="{Binding DataContext.RemoveSectionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                CommandParameter="{Binding}"/>
+                    </Grid>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Fee Details template-->
+    <Style x:Key="FeeDetailsTemplate" TargetType="{x:Type ItemsControl}">
+        <Setter Property="Grid.IsSharedSizeScope" Value="True"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--Monthly Record Panel-->
+                    <StackPanel Margin="20 0">
+                        <!--Date & Year-->
+                        <TextBlock Text="{Binding Session}"
+                                   Name="session"
+                                   FontFamily="{StaticResource MoonLightFont}"
+                                   FontSize="{StaticResource FontSizeMedium}"
+                                   FontWeight="SemiBold"
+                                   Margin="10 20 10 3"
+                                   HorizontalAlignment="Left"/>
+                        <!--Header-->
+                        <Border  CornerRadius="7" Background="{StaticResource PrimaryColorBrush}">
+                            <Grid Margin="5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="H"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                           Text="Fee" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="Amount" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="2" Margin="10 0"
+                                           Text="Late Fee"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="3" Margin="10 0"
+                                           Text="Discount"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Margin="10 0"
+                                           Text="Total"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="5" Margin="10 0"
+                                           Text="Paid"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="6" Margin="10 0"
+                                           Text="Due"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="7" Margin="10 0"
+                                           Text="Due Date"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="8" Margin="10 0"
+                                           Text="Status"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!--Fee Record-->
+                        <ItemsControl ItemsSource="{Binding FeeEntities}" AlternationCount="2">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Name="Row">
+                                        <Border.InputBindings>
+                                            <KeyBinding Key="Esc" CommandParameter="{Binding}"
+                                                        Command="{Binding DataContext.CancelEditCommand, ElementName=stackpanel}"/>
+                                        </Border.InputBindings>
+                                        <Grid Margin="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="H"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--Fee-->
+                                            <TextBlock Grid.Column="0" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       Foreground="{StaticResource PrimaryColorBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="0" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox Grid.Column="0"
+                                                         VerticalAlignment="Center"
+                                                         Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         Foreground="{StaticResource PrimaryColorBrush}"
+                                                         TextAlignment="Center"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}"
+                                                           Visibility="{Binding IsFeeValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+                                            
+                                            
+                                            <!--Amount-->
+                                            <TextBlock Grid.Column="1" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="1" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         TextAlignment="Center"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsAmountValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Late Fee-->
+                                            <TextBlock VerticalAlignment="Center" Grid.Column="2" Margin="10 0"
+                                                       Text="{Binding LateFee,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center" 
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel VerticalAlignment="Center" Grid.Column="2" Margin="10 0">
+                                                <TextBox Text="{Binding LateFee,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         TextAlignment="Center" 
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsLateFeeValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+                                            
+                                            <!--Discount-->
+                                            <TextBlock Grid.Column="3" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Discount,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="3" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox TextAlignment="Center" 
+                                                         Text="{Binding Discount,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsDiscountValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+                                            
+                                            <!--Total-->
+                                            <TextBlock Grid.Column="4" Margin="10 0"
+                                                       Text="{Binding Total}" 
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"/>
+
+                                            
+                                            <!--Paid Amount-->
+                                            <TextBlock Grid.Column="5" Margin="10 0"
+                                                       Text="{Binding PaidAmount}"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"/>
+                                            <!--Due Amount-->
+                                            <TextBlock Grid.Column="6" Margin="10 0"
+                                                       Text="{Binding DueAmount}"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"/>
+                                            <!--Due Date-->
+                                            <TextBlock Text="{Binding Date, StringFormat= {}{0:dd-MMM-yyyy}}"
+                                                       VerticalAlignment="Center" Margin="10 0"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Grid.Column="7"  
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <DatePicker SelectedDate="{Binding Date, StringFormat={}{0:dd-MMM-yyyy}}"
+                                                        VerticalAlignment="Center" Margin="10 0"
+                                                        FontSize="{StaticResource FontSizeSmall}"
+                                                        Grid.Column="7"
+                                                        Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+
+                                            <!--Fee Status-->
+                                            <Label Grid.Column="8" Margin="10 0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalContentAlignment="Center"
+                                                   Content="{Binding FeeStatus}"
+                                                   FontSize="{StaticResource FontSizeSmall}"
+                                                   Style="{StaticResource FeeTemplate}"/>
+
+                                            <!--Action button for edit & delete record-->
+                                            <StackPanel Grid.Column="9" HorizontalAlignment="Center" Orientation="Horizontal">
+                                                <Button Margin="10 0 10 0"
+                                                        Style="{StaticResource IconGrowButton}"
+                                                        ToolTip="Edit Discount"
+                                                        Foreground="{StaticResource GreenColorBrush}"
+                                                        Content="{Binding EditButtonIcon}"
+                                                        Command="{Binding DataContext.EditFeeCommand , ElementName=stackpanel}"
+                                                        CommandParameter="{Binding}"
+                                                        IsEnabled="{Binding IsEditButtonEnable}"/>
+
+                                                <Button Style="{StaticResource IconGrowButton}"
+                                                        ToolTip="Delete"
+                                                        Foreground="{StaticResource RedColorBrush}"
+                                                        Content="{Binding DeleteButtonIcon}"
+                                                        Command="{Binding DataContext.DeleteFeeCommand , ElementName=stackpanel}"
+                                                        CommandParameter="{Binding}"
+                                                        IsEnabled="{Binding IsEditButtonEnable}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <!--Alternating row color for records-->
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                            <Setter Property="Background" TargetName="Row">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{StaticResource VeryLightGray}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                            <Setter Property="Background" TargetName="Row">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{StaticResource LightGray}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <!--Grand Sum-->
+                        <!--Header-->
+                        <Border  CornerRadius="7" Background="{StaticResource DarkGrayBrush}">
+                            <Grid Margin="5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="H"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                           Text="Grand Sum" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding TotalAmount, StringFormat={}{0:C0} ,ConverterCulture=ur-PK}"
+                                           Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="2" Margin="10 0"
+                                           Text="{Binding TotalLateFee, StringFormat={}{0:C0} ,ConverterCulture=ur-PK}"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="3" Margin="10 0"
+                                           Text="{Binding TotalDiscount, StringFormat={}{0:C0} ,ConverterCulture=ur-PK}"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Margin="10 0"
+                                           Text="{Binding GrandTotal, StringFormat={}{0:C0} ,ConverterCulture=ur-PK}"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="5" Margin="10 0"
+                                           Text="{Binding TotalPaidAmount, StringFormat={}{0:C0} ,ConverterCulture=ur-PK}"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource DarkGreenColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="6" Margin="10 0"
+                                           Text="{Binding TotalDue, StringFormat={}{0:C0} ,ConverterCulture=ur-PK}"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource RedColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                    </StackPanel>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FeeDetailsTemplate2" TargetType="{x:Type ItemsControl}">
+        <Setter Property="Grid.IsSharedSizeScope" Value="True"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--Monthly Record Panel-->
+                    <StackPanel Margin="20 0">
+                        <!--Date & Year-->
+                        <TextBlock Text="{Binding Session}"
+                                   Name="session"
+                                   FontFamily="{StaticResource MoonLightFont}"
+                                   FontSize="{StaticResource FontSizeMedium}"
+                                   FontWeight="SemiBold"
+                                   Margin="10 20 10 3"
+                                   HorizontalAlignment="Left"/>
+                        <!--Header-->
+                        <Border  CornerRadius="7" Background="{StaticResource PrimaryColorBrush}">
+                            <Grid Margin="5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                           Text="Fee" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="Amount" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="2" Margin="10 0"
+                                           Text="Late Fee"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="3" Margin="10 0"
+                                           Text="Discount"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Margin="10 0"
+                                           Text="Total"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="5" Margin="10 0"
+                                           Text="Paid"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="6" Margin="10 0"
+                                           Text="Due"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="7" Margin="10 0"
+                                           Text="Due Date"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="8" Margin="10 0"
+                                           Text="Status"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!--Fee Record-->
+                        <ItemsControl ItemsSource="{Binding FeeEntities}" AlternationCount="2">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Name="Row">
+                                        <Border.InputBindings>
+                                            <KeyBinding Key="Esc" CommandParameter="{Binding}"
+                                                        Command="{Binding DataContext.CancelEditCommand, ElementName=stackpanel}"/>
+                                        </Border.InputBindings>
+                                        <Grid Margin="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--Fee-->
+                                            <TextBlock Grid.Column="0" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       Foreground="{StaticResource PrimaryColorBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="0" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox Grid.Column="0"
+                                                         VerticalAlignment="Center"
+                                                         Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         Foreground="{StaticResource PrimaryColorBrush}"
+                                                         TextAlignment="Center"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}"
+                                                           Visibility="{Binding IsFeeValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+
+                                            <!--Amount-->
+                                            <TextBlock Grid.Column="1" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="1" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         TextAlignment="Center"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsAmountValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Late Fee-->
+                                            <TextBlock VerticalAlignment="Center" Grid.Column="2" Margin="10 0"
+                                                       Text="{Binding LateFee,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center" 
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel VerticalAlignment="Center" Grid.Column="2" Margin="10 0">
+                                                <TextBox Text="{Binding LateFee,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         TextAlignment="Center" 
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsLateFeeValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Discount-->
+                                            <TextBlock Grid.Column="3" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Discount,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="3" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox TextAlignment="Center" 
+                                                         Text="{Binding Discount,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeSmall}"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsDiscountValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Total-->
+                                            <TextBlock Grid.Column="4" Margin="10 0"
+                                                       Text="{Binding Total}" 
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"/>
+
+
+                                            <!--Paid Amount-->
+                                            <TextBlock Grid.Column="5" Margin="10 0"
+                                                       Text="{Binding PaidAmount}"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"/>
+                                            <!--Due Amount-->
+                                            <TextBlock Grid.Column="6" Margin="10 0"
+                                                       Text="{Binding DueAmount}"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"/>
+                                            <!--Due Date-->
+                                            <TextBlock Text="{Binding Date, StringFormat= {}{0:dd-MMM-yyyy}}"
+                                                       VerticalAlignment="Center" Margin="10 0"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Grid.Column="7"  
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <DatePicker SelectedDate="{Binding Date, StringFormat={}{0:dd-MMM-yyyy}}"
+                                                        VerticalAlignment="Center" Margin="10 0"
+                                                        FontSize="{StaticResource FontSizeSmall}"
+                                                        Grid.Column="7"
+                                                        Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+
+                                            <!--Fee Status-->
+                                            <Label Grid.Column="8" Margin="10 0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalContentAlignment="Center"
+                                                   Content="{Binding FeeStatus}"
+                                                   FontSize="{StaticResource FontSizeSmall}"
+                                                   Style="{StaticResource FeeTemplate}"/>
+
+                                            <!--Action button for edit & delete record-->
+                                            <StackPanel Grid.Column="9" HorizontalAlignment="Center" Orientation="Horizontal">
+                                                <Button Margin="10 0 10 0"
+                                                        Style="{StaticResource IconGrowButton}"
+                                                        ToolTip="Edit Discount"
+                                                        Foreground="{StaticResource GreenColorBrush}"
+                                                        Content="{Binding EditButtonIcon}"
+                                                        Command="{Binding DataContext.EditFeeCommand , ElementName=stackpanel}"
+                                                        CommandParameter="{Binding}"
+                                                        IsEnabled="{Binding IsEditButtonEnable}"/>
+
+                                                <Button Style="{StaticResource IconGrowButton}"
+                                                        ToolTip="Delete"
+                                                        Foreground="{StaticResource RedColorBrush}"
+                                                        Content="{Binding DeleteButtonIcon}"
+                                                        Command="{Binding DataContext.DeleteFeeCommand , ElementName=stackpanel}"
+                                                        CommandParameter="{Binding}"
+                                                        IsEnabled="{Binding IsEditButtonEnable}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <!--Alternating row color for records-->
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                            <Setter Property="Background" TargetName="Row">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{StaticResource VeryLightGray}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                            <Setter Property="Background" TargetName="Row">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{StaticResource LightGray}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FeeDetailWithPayTemplate" TargetType="{x:Type ItemsControl}">
+        <Setter Property="Grid.IsSharedSizeScope" Value="True"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--Monthly Record Panel-->
+                    <StackPanel Margin="0 0">
+                        <!--Date & Year-->
+                        <TextBlock Text="{Binding Session}"
+                                   Name="session"
+                                   FontFamily="{StaticResource MoonLightFont}"
+                                   FontSize="{StaticResource FontSizeMedium}"
+                                   FontWeight="SemiBold"
+                                   Margin="10 20 10 3"
+                                   HorizontalAlignment="Left"/>
+                        <!--Header-->
+                        <Border  CornerRadius="7" Background="{StaticResource PrimaryColorBrush}">
+                            <Grid Margin="5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="C"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="C"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="D"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="E"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="H"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                           Text="Fee" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="Amount" Margin="10 0"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="2" Margin="10 0"
+                                           Text="Late Fee"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{StaticResource LightColorBrush}"/>
+                                <TextBlock Grid.Column="3" Margin="10 0"
+                                           Text="Discount"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Margin="10 0"
+                                           Text="Total"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="5" Margin="10 0"
+                                           Text="Paid"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="6" Margin="10 0"
+                                           Text="Due"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="7" Margin="10 0"
+                                           Text="Due Date"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="8" Margin="10 0"
+                                           Text="Pay"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="9" Margin="10 0"
+                                           Text="Status"
+                                           FontSize="{StaticResource FontSizeMedium}"
+                                           Foreground="{StaticResource LightColorBrush}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!--Fee Record-->
+                        <ItemsControl ItemsSource="{Binding FeeEntities}" AlternationCount="2">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Name="Row">
+                                        <Border.InputBindings>
+                                            <KeyBinding Key="Esc" CommandParameter="{Binding}"
+                                                        Command="{Binding DataContext.CancelEditCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                                        </Border.InputBindings>
+                                        <Grid Margin="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="C"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="C"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="D"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="E"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="H"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--Fee-->
+                                            <TextBlock Grid.Column="0" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeMediumSmall}"
+                                                       Foreground="{StaticResource PrimaryColorBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="0" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox Grid.Column="0"
+                                                         VerticalAlignment="Center"
+                                                         Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeMediumSmall}"
+                                                         Foreground="{StaticResource PrimaryColorBrush}"
+                                                         TextAlignment="Center"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeSmall}"
+                                                           Foreground="{StaticResource RedColorBrush}"
+                                                           Visibility="{Binding IsFeeValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+
+                                            <!--Amount-->
+                                            <TextBlock Grid.Column="1" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeMediumSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="1" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeMediumSmall}"
+                                                         TextAlignment="Center"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeSmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsAmountValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Late Fee-->
+                                            <TextBlock VerticalAlignment="Center" Grid.Column="2" Margin="10 0"
+                                                       Text="{Binding LateFee,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeMediumSmall}"
+                                                       HorizontalAlignment="Center" 
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel VerticalAlignment="Center" Grid.Column="2" Margin="10 0">
+                                                <TextBox Text="{Binding LateFee,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeMediumSmall}"
+                                                         TextAlignment="Center" 
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsLateFeeValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Discount-->
+                                            <TextBlock Grid.Column="3" Margin="10 0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Discount,UpdateSourceTrigger=PropertyChanged}"
+                                                       FontSize="{StaticResource FontSizeMediumSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <StackPanel Grid.Column="3" Margin="10 0"
+                                                        VerticalAlignment="Center">
+                                                <TextBox TextAlignment="Center" 
+                                                         Text="{Binding Discount,UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="{StaticResource FontSizeMediumSmall}"
+                                                         Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+                                                <TextBlock Text="{Binding PaidAmountAlert}" FontSize="{StaticResource FontSizeVerySmall}"
+                                                           Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                           Visibility="{Binding IsDiscountValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                            </StackPanel>
+
+                                            <!--Total-->
+                                            <TextBlock Grid.Column="4" Margin="10 0"
+                                                       Text="{Binding Total}" 
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource FontSizeMediumSmall}"
+                                                       HorizontalAlignment="Center"/>
+
+                                            <!--Paid Amount-->
+                                            <Border Grid.Column="5"  Margin="10 0" CornerRadius="5" Name="paidBorder"
+                                                    Background="{StaticResource DarkGreenColorBrush}">
+                                                <TextBlock Foreground="{StaticResource LightColorBrush}"
+                                                           FontWeight="SemiBold"  Margin="10 0" 
+                                                           Text="{Binding PaidAmount, StringFormat={}{0:C0}}"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="{StaticResource FontSizeMediumSmall}"
+                                                           HorizontalAlignment="Center"/>
+                                            </Border>
+
+                                            <!--Due Amount-->
+                                            <Border Grid.Column="6" Margin="10 0" CornerRadius="5" Name="dueBorder"
+                                                    Background="{StaticResource RedColorBrush}">
+                                                <TextBlock Foreground="{StaticResource LightColorBrush}"
+                                                           FontWeight="SemiBold" Margin="10 0"  
+                                                           Text="{Binding DueAmount, StringFormat={}{0:C0}}"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="{StaticResource FontSizeMediumSmall}"
+                                                           HorizontalAlignment="Center"/>
+                                            </Border>
+                                            <!--Due Date-->
+                                            <TextBlock Text="{Binding Date, StringFormat= {}{0:dd-MMM-yyyy}}"
+                                                       VerticalAlignment="Center" Margin="10 0"
+                                                       FontSize="{StaticResource FontSizeMediumSmall}"
+                                                       HorizontalAlignment="Center"
+                                                       Grid.Column="7"  
+                                                       Visibility="{Binding IsEditEnable , Converter={local:BoolToInverseHiddenVisibilityConverter}}"/>
+                                            <DatePicker SelectedDate="{Binding Date, StringFormat={}{0:dd-MMM-yyyy}}"
+                                                        VerticalAlignment="Center" Margin="10 0"
+                                                        FontSize="{StaticResource FontSizeMediumSmall}"
+                                                        Grid.Column="7"
+                                                        Visibility="{Binding IsEditEnable , Converter={local:BoolToVisibilityHiddenConverter}}"/>
+
+                                            <!--Amount to Pay-->
+                                            <Border Grid.Column="8" Margin="10 0" 
+                                                    BorderBrush="{StaticResource DarkGreenColorBrush}"
+                                                    BorderThickness="1" CornerRadius="5">
+                                                <StackPanel>
+                                                    <TextBox Text="{Binding AmountToPay,ConverterCulture='ur-PK', StringFormat=c,
+                                                        UpdateSourceTrigger=PropertyChanged}" MinWidth="50" Name="amountToPay" 
+                                                             FontWeight="SemiBold" Foreground="{StaticResource DarkGreenColorBrush}"
+                                                             VerticalAlignment="Center" BorderThickness="0"
+                                                             FontSize="{StaticResource FontSizeMediumSmall}"
+                                                             TextAlignment="Center"/>
+                                                    <TextBlock Text="Invalid input." FontSize="{StaticResource FontSizeVerySmall}"
+                                                               Foreground="{StaticResource RedColorBrush}" HorizontalAlignment="Center"
+                                                               Visibility="{Binding IsAmountToPayValid,Converter={local:BoolToInverseVisibilityConverter}}"/>
+                                                </StackPanel>
+                                            </Border>
+                                            
+                                            <!--Fee Status-->
+                                            <Button Grid.Column="9" Margin="10 0" Name="feeButton"
+                                                    VerticalAlignment="Center" Content="{Binding FeeStatus}"
+                                                    HorizontalContentAlignment="Center"
+                                                    FontSize="{StaticResource FontSizeMediumSmall}"
+                                                    Style="{StaticResource FeePayTemplate}"
+                                                    Command="{Binding DataContext.PayFeeCommand ,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}} }"
+                                                    CommandParameter="{Binding}"/>
+                                            
+                                            <!--Action button for edit & delete record-->
+                                            <StackPanel Grid.Column="10" HorizontalAlignment="Center" Orientation="Horizontal">
+                                                <Button Margin="10 0 10 0"
+                                                        Style="{StaticResource IconGrowButton}"
+                                                        ToolTip="Edit Discount"
+                                                        Foreground="{StaticResource GreenColorBrush}"
+                                                        Content="{Binding EditButtonIcon}"
+                                                        Command="{Binding DataContext.EditFeeCommand ,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                                        CommandParameter="{Binding}"
+                                                        IsEnabled="{Binding IsEditButtonEnable}"/>
+
+                                                <Button Style="{StaticResource IconGrowButton}"
+                                                        ToolTip="Delete"
+                                                        Foreground="{StaticResource RedColorBrush}"
+                                                        Content="{Binding DeleteButtonIcon}"
+                                                        Command="{Binding DataContext.DeleteFeeCommand ,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                                        CommandParameter="{Binding}"
+                                                        IsEnabled="{Binding IsEditButtonEnable}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <!--Alternating row color for records-->
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding DueAmount}" Value="0">
+                                            <Setter TargetName="dueBorder" Property="Background" Value="{StaticResource DarkGreenColorBrush}"/>
+                                            <Setter TargetName="amountToPay" Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                            <Setter Property="Background" TargetName="Row">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{StaticResource VeryLightGray}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                            <Setter Property="Background" TargetName="Row">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{StaticResource LightGray}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--#region Scroll bar template-->
+    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        x:Name="rectangle"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="{StaticResource PrimaryLightColorBrush}"
+                        CornerRadius="3"
+                        Opacity="0.2"
+                        SnapsToDevicePixels="True" />
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="rectangle"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="rectangle"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0.2"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Deafult Scroll bar  -->
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Margin" Value="-14,0,0,0" />
+        <Setter Property="MinWidth" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid
+                        x:Name="Bg"
+                        Background="Transparent"
+                        SnapsToDevicePixels="true">
+
+                        <Border Padding="0,4,0,4">
+                            <Track
+                                x:Name="PART_Track"
+                                Width="6"
+                                HorizontalAlignment="Center"
+                                IsDirectionReversed="true"
+                                IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Opacity="0" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Opacity="0" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                </Track.Thumb>
+                            </Track>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Height" Value="14" />
+                <Setter Property="MinHeight" Value="{Binding Height, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="Margin" Value="0,-14,0,0" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                <Track
+                                    x:Name="PART_Track"
+                                    Height="6"
+                                    IsEnabled="{TemplateBinding IsMouseOver}">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Opacity="0" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Opacity="0" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Deafult Scroll Viewer  -->
+    <Style TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Rectangle
+                            x:Name="Corner"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                        <ScrollContentPresenter
+                            x:Name="PART_ScrollContentPresenter"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="{TemplateBinding Padding}"
+                            CanContentScroll="{TemplateBinding CanContentScroll}"
+                            CanHorizontallyScroll="False"
+                            CanVerticallyScroll="False"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                        <ScrollBar
+                            x:Name="PART_VerticalScrollBar"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            AutomationProperties.AutomationId="VerticalScrollBar"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableHeight}"
+                            Minimum="0"
+                            Opacity="0.2"
+                            ViewportSize="{TemplateBinding ViewportHeight}"
+                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <ScrollBar
+                            x:Name="PART_HorizontalScrollBar"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            AutomationProperties.AutomationId="HorizontalScrollBar"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableWidth}"
+                            Minimum="0"
+                            Opacity="0.2"
+                            Orientation="Horizontal"
+                            ViewportSize="{TemplateBinding ViewportWidth}"
+                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                            Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_VerticalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:0.3" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_HorizontalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_VerticalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0.2"
+                                        Duration="0:0:0.3" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_HorizontalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0.2"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Padded scroll bar for dialog  -->
+    <Style x:Key="DialogScrollbar" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Margin" Value="-14,0,0,0" />
+        <Setter Property="MinWidth" Value="{Binding Width, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid
+                        x:Name="Bg"
+                        Background="Transparent"
+                        SnapsToDevicePixels="true">
+
+                        <Border Padding="0,40,0,20">
+                            <Track
+                                x:Name="PART_Track"
+                                Width="6"
+                                HorizontalAlignment="Center"
+                                IsDirectionReversed="true"
+                                IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Opacity="0" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Opacity="0" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                </Track.Thumb>
+                            </Track>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Height" Value="14" />
+                <Setter Property="MinHeight" Value="{Binding Height, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="Margin" Value="0,-14,0,0" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                <Track
+                                    x:Name="PART_Track"
+                                    Height="6"
+                                    IsEnabled="{TemplateBinding IsMouseOver}">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Opacity="0" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Opacity="0" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Dialog Scroll Viewer  -->
+    <Style x:Key="DialogScrollViewer" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Rectangle
+                            x:Name="Corner"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                        <ScrollContentPresenter
+                            x:Name="PART_ScrollContentPresenter"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="{TemplateBinding Padding}"
+                            CanContentScroll="{TemplateBinding CanContentScroll}"
+                            CanHorizontallyScroll="False"
+                            CanVerticallyScroll="False"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                        <ScrollBar
+                            x:Name="PART_VerticalScrollBar"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            AutomationProperties.AutomationId="VerticalScrollBar"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableHeight}"
+                            Minimum="0"
+                            Opacity="0.2"
+                            Style="{StaticResource DialogScrollbar}"
+                            ViewportSize="{TemplateBinding ViewportHeight}"
+                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <ScrollBar
+                            x:Name="PART_HorizontalScrollBar"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            AutomationProperties.AutomationId="HorizontalScrollBar"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableWidth}"
+                            Minimum="0"
+                            Opacity="0.2"
+                            Orientation="Horizontal"
+                            Style="{StaticResource DialogScrollbar}"
+                            ViewportSize="{TemplateBinding ViewportWidth}"
+                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                            Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_VerticalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:0.3" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_HorizontalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_VerticalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0.2"
+                                        Duration="0:0:0.3" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_HorizontalScrollBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0.2"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--#endregion-->
+
+</ResourceDictionary>

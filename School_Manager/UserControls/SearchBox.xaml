@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="School_Manager.SearchBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:School_Manager"
+             mc:Ignorable="d"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Name="SearchBoxControl"
+             >
+   
+    <Border x:Name="border" CornerRadius="20" Height="40" Background="{StaticResource LightColorBrush}">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+        <!--SearchBox & Cancel Button-->
+        <Grid x:Name="SearchGrid" Width="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+           
+           
+            <!--Cancle Button-->
+            <Button Grid.Column="0"
+                    x:Name="CancleButton"
+                    Click="CancleButton_Click"
+                    Margin="10 0 0 0"
+                    Style="{StaticResource IconGrowButton}"
+                    Content="{StaticResource CrossIcon}"
+                    Foreground="{StaticResource SecondaryColorBrush}"
+                    />
+
+            <!--SearchBox-->
+            <TextBox Grid.Column="1"
+                     Style="{StaticResource SearchTextBox}"
+                     x:Name="textBox"
+                     Background="Transparent"
+                     Tag="Search..."
+                     Text="{Binding SearchText,
+                               RelativeSource={RelativeSource 
+                               Mode=FindAncestor, 
+                               AncestorType={x:Type UserControl}}, 
+                               Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding CloseSearchBoxCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}}"  Key="Esc"/>
+                    <KeyBinding Command="{Binding BeginSearchCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}}"  Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
+
+        </Grid>
+
+        <!--Search Button-->
+        <Button Grid.Column="2"
+                Click="SearchButton_Click"
+                Style="{StaticResource IconGrowButton}"
+                Content="{StaticResource SearchIcon}"
+                x:Name="SearchButton"/>
+           
+        </Grid>
+        <!--PopupBox-->
+            <Grid Width="0" x:Name="PopupGrid" Grid.Column="1" Margin="0 0 0 0">
+                <materialDesign:PopupBox StaysOpen="True" Margin="5"
+                                         x:Name="popupBox" Closed="PopupBox_Closed"
+                                         Style="{StaticResource PopupBoxStyle}" 
+                                         VerticalAlignment="Center" 
+                                         Panel.ZIndex="1" 
+                                         Grid.Column="4">
+                    <materialDesign:PopupBox.PopupContent>
+                        <StackPanel>
+                            <TextBlock Margin="0 5 0 5" Foreground="{StaticResource SecondaryColorBrush}">
+                                <Underline> Search Feilds </Underline>
+                            </TextBlock>
+                            <ItemsControl x:Name="PopupItems" ItemsSource="{Binding SearchColumns,Mode=TwoWay}" FontSize="{StaticResource FontSizeSmall}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Content}"
+                                                  IsChecked="{Binding IsChecked}"
+                                                  Cursor="Hand"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </materialDesign:PopupBox.PopupContent>
+                </materialDesign:PopupBox>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
+                

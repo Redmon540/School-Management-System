@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="School_Manager.Student_Card_1_Back"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:School_Manager"
+             mc:Ignorable="d" >
+    <Border BorderThickness="1" BorderBrush="Black" Height="192"
+          Width="336">
+        
+        <Grid Background="{StaticResource LightColorBrush}" 
+          >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--QR Code-->
+        <Image Grid.ColumnSpan="2" Grid.Row="0" Source="{Binding QRCode}" Margin="0 10 0 0"
+               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <!--NOTE:-->
+        <TextBlock Margin="10 5" Grid.Row="1" 
+                   Grid.ColumnSpan="2" 
+                   FontSize="10"
+                   TextWrapping="Wrap"
+                   Text="{Binding Note}"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
+                   />
+
+        <!--Issue Date-->
+        <StackPanel Margin="10 0" Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="Issue Date:"
+                       Foreground="Black"
+                       FontSize="10"/>
+            <TextBlock Text="{Binding IssueDate}"
+                       Margin="10 0 0 0"
+                       FontSize="10"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource RedColorBrush}"/>
+        </StackPanel>
+        <!--Valid Date-->
+        <StackPanel Margin="10 0" Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+            <TextBlock Text="Valid Date:"
+                       Foreground="Black"
+                       FontSize="10"/>
+            <TextBlock Text="{Binding ValidDate}"
+                       Margin="10 0 0 0"
+                       FontSize="10"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource RedColorBrush}"/>
+        </StackPanel>
+        
+        <!--Footer-->
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
+                    <GradientStop Offset="0" Color="{StaticResource PrimaryLightColor}" />
+                    <GradientStop Offset="0.5" Color="{StaticResource PrimaryColor}" />
+                    <GradientStop Offset="1" Color="{StaticResource PrimaryDarkColor}" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            
+            <!--Terms & Conditions-->
+            <StackPanel Margin="0 10" Grid.ColumnSpan="2">
+                <TextBlock Text="Term &amp; Conditions"
+                           HorizontalAlignment="Center"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource RedColorBrush}"/>
+                <TextBlock TextWrapping="Wrap"
+                           Text="{Binding TermsAndConditions}"
+                           Margin="10 0"
+                           FontSize="10"
+                           Foreground="{StaticResource LightColorBrush}"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+
+    </Border>
+</UserControl>

@@ -1,0 +1,95 @@
+﻿<local:BasePage
+    x:Class="School_Manager.CreateClass"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:School_Manager"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Create Class"
+    x:TypeArguments="local:CreateClassViewModel"
+    mc:Ignorable="d" Background="{StaticResource LightColorBrush}">
+
+    <ScrollViewer>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--  Header  -->
+            <local:Header Heading="Create Class Structure" Margin="20 0"/>
+
+            <!--Class Name-->
+            <TextBox Style="{StaticResource TextBoxWithLabelVertical}"
+                     DataContext="{Binding ClassName}"  Margin="10"
+                     FontSize="{StaticResource FontSizeMedium}"
+                     Width="200" Grid.Row="1"/>
+
+            <!--Section-->
+            <StackPanel Background="{StaticResource VeryLightGrayBrush}"
+                        Grid.Row="2" Margin="20" >
+                    
+                    <!--Section Heading-->
+                    <TextBlock FontWeight="SemiBold"
+                               FontSize="{StaticResource FontSizeRegular}"
+                               Foreground="{StaticResource BlackColorBrush}"
+                               Text="Sections" Margin="30 30 0 10"/>
+                    
+                    <!--Add Sections-->
+                <Button Style="{StaticResource ContentGrowButton}"
+                        Content="{StaticResource PlusIcon}"
+                        Tag="Add Section"
+                        Foreground="{StaticResource DarkGreenColorBrush}"
+                        Background="{StaticResource DarkGreenColorBrush}"
+                        Margin="30 0 0 0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding AddSectionCommand}"
+                        FontSize="{StaticResource FontSizeMedium}"/>
+                    
+                    <!--Sections List-->
+                <ItemsControl Margin="50 10 10 10" ItemsSource="{Binding Sections}"
+                              Style="{StaticResource SectionItemsTemplate}"/>
+            </StackPanel>
+            
+            <!--Fee Structure-->
+            <StackPanel Background="{StaticResource VeryLightGrayBrush}"
+                        Grid.Row="3" Margin="20 0 20 20" >
+
+                <TextBlock FontWeight="SemiBold"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           Foreground="{StaticResource BlackColorBrush}"
+                           Text="Fee Structure" Margin="30 30 0 0"/>
+
+                <!--Add Fee-->
+                <Button Style="{StaticResource ContentGrowButton}"
+                        Content="{StaticResource PlusIcon}"
+                        Tag="Add Fee" 
+                        Foreground="{StaticResource DarkGreenColorBrush}"
+                        Background="{StaticResource DarkGreenColorBrush}"
+                        Margin="30 10 0 0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding AddFeeCommand}"
+                        FontSize="{StaticResource FontSizeMedium}"/>
+
+
+                    <ItemsControl Margin="50 10 10 10" ItemsSource="{Binding FeeInformation}"
+                                  Style="{StaticResource FeeItemsCollectionTemplate}">
+                        
+                    </ItemsControl>
+
+                </StackPanel>
+
+            <Button Margin="20" Grid.Row="4"
+                    HorizontalAlignment="Right"
+                    Content="Create Class"
+                    Command="{Binding CreateClassCommand}"/>
+
+        </Grid>
+    </ScrollViewer>
+</local:BasePage>

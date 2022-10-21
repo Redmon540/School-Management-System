@@ -1,0 +1,67 @@
+﻿<local:BasePage x:TypeArguments="local:EditTeacherInfoViewModel"  
+                x:Class="School_Manager.EditTeacherInfo"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:School_Manager"
+                mc:Ignorable="d" 
+                Title="EditTeacherInfo"
+                Background="White">
+
+    <ScrollViewer>
+        <Grid  Margin="20 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!--Header-->
+            <local:Header Heading="Edit Information Structure"/>
+
+            <!--Teacher Information-->
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <TextBlock Text="Teacher Information"
+                           FontWeight="SemiBold"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           HorizontalAlignment="Center"
+                           Margin="0 10"
+                           Foreground="{StaticResource PrimaryColorBrush}"/>
+                <TextBox Style="{StaticResource TextBoxWithLabel}"
+                         DataContext="{Binding TeacherID}" Width="200"
+                         Margin="0 5"/>
+                
+
+            <ItemsControl ItemsSource="{Binding TeacherColumn}" Grid.IsSharedSizeScope="True"
+                          Style="{StaticResource EditableTextItems}" HorizontalAlignment="Center"/>
+            
+            </StackPanel>
+            
+            <!--Custom feilds List-->
+            <StackPanel Grid.Row="2">
+                <Button Style="{StaticResource ContentGrowButton}"
+                        Command="{Binding AddCustomTeacherColumn}"
+                        FontSize="{StaticResource FontSizeMedium}"
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource DarkGreenColorBrush}"
+                        Background="{StaticResource DarkGreenColorBrush}"
+                        Content="{StaticResource PlusIcon}"
+                        Tag="Add Custom Feild" Margin="0 20"/>
+
+                <ItemsControl Margin="50 10 10 10" 
+                              ItemsSource="{Binding CustomTeacherColumns}"
+                              Style="{StaticResource CustomStudentColumn}"/>
+
+            </StackPanel>
+
+            <Button Content="Update"
+                    Command="{Binding UpdateStructureCommand}"
+                    HorizontalAlignment="Right"
+                    Grid.Row="3"/>
+
+        </Grid>
+    </ScrollViewer>
+
+</local:BasePage>

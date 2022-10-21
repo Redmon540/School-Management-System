@@ -1,0 +1,79 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:School_Manager"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <FontFamily x:Key="FontLight">pack://application;,,,/Fonts/#Lato-Light</FontFamily>
+    <FontFamily x:Key="FontRegular">pack://application;,,,/Fonts/#Lato</FontFamily>
+    <FontFamily x:Key="FontBold">pack://application;,,,/Fonts/#Lato</FontFamily>
+    <FontFamily x:Key="FontBlack">pack://application;,,,/Fonts/#Lato Black</FontFamily>
+    <FontFamily x:Key="FontAwesomeRegular">pack://application;,,,/Fonts/FontAwesomeRegular.otf#Font Awesome 5 Free Regular</FontFamily>
+    <FontFamily x:Key="FontAwesomeBrands">pack://application;,,,/Fonts/FontAwesomeBrands.otf#Font Awesome 5 Brands Regular</FontFamily>
+    <FontFamily x:Key="FontAwesomeSolid">pack://application;,,,/Fonts/FontAwesomeSolid.otf#Font Awesome 5 Free Solid</FontFamily>
+    <FontFamily x:Key="AdamFont">pack://application;,,,/Fonts/#ADAM.CG PRO</FontFamily>
+    <FontFamily x:Key="MoonLightFont">\Kozuka Gothic Pro B</FontFamily>
+    <FontFamily x:Key="MoonBoldFont">pack://application;,,,/Fonts/#ADAM.CG PRO</FontFamily>
+
+    <!--<Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+        <Setter Property="FontFamily" Value="{StaticResource FontLight}"/>
+    </Style>-->
+
+    <!--<Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
+        <Setter Property="FontFamily" Value="{StaticResource FontLight}"/>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}"/>
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}"/>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}"/>
+    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}"/>
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}"/>-->
+
+    <!--Font sizes-->
+    <system:Double x:Key="FontSizeVerySmall">10</system:Double>
+    <system:Double x:Key="FontSizeMediumSmall">13</system:Double>
+    <system:Double x:Key="FontSizeSmall">14</system:Double>
+    <system:Double x:Key="FontSizeMedium">17</system:Double>
+    <system:Double x:Key="FontSizeRegular">20</system:Double>
+    <system:Double x:Key="FontSizeLarge">30</system:Double>
+    <system:Double x:Key="FontSizeExtraLarge">45</system:Double>
+
+
+    <!--Icons-->
+    <system:String x:Key="RightArrowIcon">&#xf054;</system:String>
+    <system:String x:Key="RightArrowFillIcon">&#xf0da;</system:String>
+    <system:String x:Key="CrossIcon">&#xf00d;</system:String>
+    <system:String x:Key="CrossSolidIcon">&#xf057;</system:String>
+    <system:String x:Key="SearchIcon">&#xf002;</system:String>
+    <system:String x:Key="EditIcon">&#xf044;</system:String>
+    <system:String x:Key="CheckIcon">&#xf00c;</system:String>
+    <system:String x:Key="CheckSolidIcon">&#xf058;</system:String>
+    <system:String x:Key="DeleteBinIcon">&#xf2ed;</system:String>
+    <system:String x:Key="ViewIcon">&#xf06e;</system:String>
+    <system:String x:Key="UndoIcon">&#xf2ea;</system:String>
+    <system:String x:Key="PlusIcon">&#xf067;</system:String>
+    <system:String x:Key="MinusIcon">&#xf068;</system:String>
+    <system:String x:Key="SaveIcon">&#xf0c7;</system:String>
+    <system:String x:Key="StudentIcon">&#xf501;</system:String>
+    <system:String x:Key="TeacherIcon">&#xf508;</system:String>
+    <system:String x:Key="ParentIcon">&#xf007;</system:String>
+    <system:String x:Key="FeeIcon">&#xf53a;</system:String>
+    <system:String x:Key="AttendenceIcon">&#xf274;</system:String>
+    <system:String x:Key="ClassIcon">&#xf0c0;</system:String>
+    <system:String x:Key="MessageIcon">&#xf0e0;</system:String>
+    <system:String x:Key="DashboardIcon">&#xf080;</system:String>
+    <system:String x:Key="AlignLeftIcon">&#xf036;</system:String>
+    <system:String x:Key="AlignRightIcon">&#xf038;</system:String>
+    <system:String x:Key="AlignCenterIcon">&#xf037;</system:String>
+    <system:String x:Key="AlignJustifyIcon">&#xf039;</system:String>
+    <system:String x:Key="BoldTextIcon">&#xf032;</system:String>
+    <system:String x:Key="ItalicTextIcon">&#xf033;</system:String>
+    <system:String x:Key="UnderlineTextIcon">&#xf0cd;</system:String>
+    <system:String x:Key="ExtraIcon">&#xf055;</system:String>
+    <system:String x:Key="AboutIcon">&#xf05a;</system:String>
+    <system:String x:Key="IDCardIcon">&#xf2bb;</system:String>
+    <system:String x:Key="ExpenseIcon">&#xf51e;</system:String>
+    <!--<system:String x:Key="DashboardIcon">&#xf201;</system:String>-->
+    
+
+
+</ResourceDictionary>

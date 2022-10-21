@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="School_Manager.PhotoTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:School_Manager"
+             mc:Ignorable="d" >
+    <Grid>
+        <Border
+                Name="Mask"
+                Background="{StaticResource SecondaryColorBrush}"
+                CornerRadius="25" Width="25"
+                Height="25"/>
+        <TextBlock Text="{StaticResource  ParentIcon}" VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="{StaticResource FontSizeMedium}"
+                   FontFamily="{StaticResource FontAwesomeSolid}"
+                   Foreground="{StaticResource LightColorBrush}"/>
+
+        <Grid>
+            <Image Width="25" Height="25" x:Name="ImageContainer" Stretch="Fill"/>
+            <Grid.OpacityMask>
+                <VisualBrush Visual="{Binding ElementName=Mask}" />
+            </Grid.OpacityMask>
+        </Grid>
+    </Grid>
+</UserControl>

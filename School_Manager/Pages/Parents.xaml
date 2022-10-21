@@ -1,0 +1,93 @@
+﻿<local:BasePage x:TypeArguments="local:ParentsViewModel"  x:Class="School_Manager.Parents"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:School_Manager"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Parents">
+
+    <Grid Background="{StaticResource LightColorBrush}" Margin="20 0" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Header-->
+        <local:Header Heading="Parents"/>
+
+        <Grid Grid.Row="1">
+            <Grid Margin="0 10 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Parents" 
+                           VerticalAlignment="Bottom"
+                           FontSize="{StaticResource FontSizeLarge}"/>
+
+                <Grid HorizontalAlignment="Right" Grid.Column="1" x:Name="grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <!--Columns List-->
+                    <ComboBox ItemsSource="{Binding ColumnNames}"
+                              Text="{Binding SelectedColumn}"
+                              Grid.Column="0" 
+                              Padding="0 15"
+                              Margin="30 0 0 0"
+                              MaxWidth="150"
+                              MinWidth="100"
+                              VerticalAlignment="Bottom"
+                              materialDesign:HintAssist.Hint="Filter"
+                              materialDesign:ComboBoxAssist.ClassicMode="True"
+                              >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DropDownClosed">
+                                <i:InvokeCommandAction 
+                                 Command="{Binding ApplyFilterCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Content}"
+                                          IsChecked="{Binding IsChecked}"
+                                          Cursor="Hand"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <local:SearchBox x:Name="SearchBox" 
+                                     Grid.Column="1"
+                                     Margin="20 0 10 0"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom"
+                                     SearchColumns="{Binding SearchColumns,Mode=TwoWay}"
+                                     Type="Parents"/>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+        
+        <local:SearchableDataGrid SearchColumns="{Binding SearchColumns,Mode=TwoWay}"
+                                  Type="Parents"
+                                  Grid.Row="2"
+                                  IsDataLoading="{Binding IsDataLoading}"
+                                  ItemsSource="{Binding GridData,Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedItem}"
+                                  SearchText="{Binding ElementName=SearchBox,Path=SearchText,Mode=TwoWay}"
+                                  BeginSearch="{Binding BeginSearch, ElementName=SearchBox, Mode=TwoWay}"/>
+
+    </Grid>
+
+</local:BasePage>

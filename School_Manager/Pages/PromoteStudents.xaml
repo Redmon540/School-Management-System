@@ -1,0 +1,196 @@
+﻿<local:BasePage x:TypeArguments="local:PromoteStudentsViewModel"  
+                x:Class="School_Manager.PromoteStudents"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:School_Manager"
+                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                mc:Ignorable="d" 
+                Title="PromoteStudents" Background="White">
+
+    <Grid Margin="20 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Header-->
+        <local:Header Grid.Row="0" Heading="Promote Students"/>
+
+        <!--Main Content-->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Previous Classes-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                      DataContext="{Binding PreviousClasses}"
+                      Margin="10">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction 
+                                 Command="{Binding DataContext.PreviousClassChangedCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+            <!--Previous Section-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                      DataContext="{Binding PreviousSections}" Margin="10"
+                      Grid.Column="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction 
+                                 Command="{Binding DataContext.PreviousSectionChangedCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+            <!--Next Classes-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                      DataContext="{Binding NextClasses}"
+                      Margin="10" Grid.Column="2">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction 
+                                 Command="{Binding DataContext.NextClassChangedCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+            <!--Next Section-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                      DataContext="{Binding NextSections}" Margin="10"
+                      Grid.Column="3">
+            </ComboBox>
+
+
+        </Grid>
+
+        <!--Promotion Button-->
+        <Button Grid.Row="2" Content="Promote" Command="{Binding PromoteCommand}" HorizontalAlignment="Center"/>
+        
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Students Record Header-->
+            <Border CornerRadius="7 7 0 0" 
+                Background="{StaticResource VeryDarkGrayBrush}"
+                Margin="20 0">
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Student ID-->
+                    <TextBlock Grid.Column="0"
+                           Text="{Binding IDName}"
+                           FontSize="{StaticResource FontSizeMedium}"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource LightColorBrush}"/>
+
+                    <!--Student Name-->
+                    <TextBlock Grid.Column="1"
+                           Text="Name"
+                           FontSize="{StaticResource FontSizeMedium}"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource LightColorBrush}"/>
+
+                    <!--Promote Button-->
+                    <TextBlock Grid.Column="2"
+                           Text="Promotion"
+                           FontSize="{StaticResource FontSizeMedium}"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource LightColorBrush}"/>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+                <ItemsControl Margin="20 0" ItemsSource="{Binding Students}" AlternationCount="2">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Name="Row" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.3*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Border-->
+                                    <Border BorderBrush="Black" BorderThickness="0.5 0.5 0 0" Grid.Column="0"/>
+                                    <Border BorderBrush="Black" BorderThickness="0.5 0.5 0 0" Grid.Column="1"/>
+                                    <Border BorderBrush="Black" BorderThickness="0.5 0.5 0.5 0" Grid.Column="2"/>
+
+                                    <!--Student ID-->
+                                    <TextBlock Grid.Column="0"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding StudentID}"
+                                               FontSize="{StaticResource FontSizeMedium}"
+                                               HorizontalAlignment="Center"/>
+                                    <!--Student Name-->
+                                    <TextBlock Grid.Column="1"
+                                               Margin="20 0"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding Name}"
+                                               FontSize="{StaticResource FontSizeMedium}"
+                                               HorizontalAlignment="Left"/>
+
+                                    <!--Promote Buttton-->
+                                    <Button Grid.Column="2"
+                                            Width="120"
+                                            Style="{StaticResource PromotionButtonStyle}"
+                                            VerticalAlignment="Center"
+                                            Content="{Binding IsPromoting}"
+                                            FontSize="{StaticResource FontSizeMedium}"
+                                            HorizontalAlignment="Center"
+                                            Command="{Binding DataContext.ChangePromotionCommand,
+                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"
+                                            CommandParameter="{Binding}"/>
+                                </Grid>
+                            </Border>
+
+                            <!--Alternating row color for records-->
+                            <DataTemplate.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                    <Setter Property="Background" TargetName="Row">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{StaticResource VeryLightGray}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                    <Setter Property="Background" TargetName="Row">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{StaticResource LightGray}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</local:BasePage>

@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="School_Manager.ViewFeeDetails"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:School_Manager"
+             mc:Ignorable="d" MaxHeight="600"
+             MinHeight="300" MinWidth="786"
+             Name="stackpanel">
+    
+    <Grid Background="{StaticResource LightColorBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0"
+                   Text="{Binding StudentName}"
+                   FontFamily="{StaticResource MoonLightFont}"
+                   FontSize="{StaticResource FontSizeLarge}"
+                   FontWeight="Bold"
+                   Margin="10 20 10 0"
+                   HorizontalAlignment="Center"/>
+        
+        <!--Options-->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+
+            <!--Fee Status-->
+            <ComboBox DataContext="{Binding FeeOptions}" Margin="0"
+                      Style="{StaticResource ComboBoxValidationTemplate}" MaxWidth="200">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.GetFeeDeatilsCommand ,ElementName=stackpanel}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            
+            <!--Months-->
+            <ComboBox DataContext="{Binding Months}" Margin="0"
+                      Grid.Column="1" MaxWidth="200"
+                      Style="{StaticResource ComboBoxValidationTemplate}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.GetFeeDeatilsCommand ,ElementName=stackpanel}"/>
+
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+            <!--Year-->
+            <ComboBox DataContext="{Binding Years}" Margin="0"
+                      Grid.Column="2" MaxWidth="200"
+                      Style="{StaticResource ComboBoxValidationTemplate}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.GetFeeDeatilsCommand ,ElementName=stackpanel}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+        </Grid>
+
+        <!--Add Fee Checkbox-->
+        <CheckBox Grid.Row="2" 
+                  FontSize="{StaticResource FontSizeMedium}"
+                  Cursor="Hand"
+                  HorizontalAlignment="Left"
+                  Margin="30 0 0 10"
+                  Content="Add Fee"
+                  IsChecked="{Binding IsAddFeeOpen}"/>
+
+        <!--Add Button-->
+        <Border BorderBrush="{StaticResource DarkGrayBrush}"
+                Grid.Row="3" BorderThickness="1"
+                Padding="10"
+                Margin="20 0"
+                CornerRadius="10"
+                Visibility="{Binding IsAddFeeOpen, Converter={local:BoolToVisibilityConverter}}">
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+               
+
+                <!--Fee-->
+                <ComboBox DataContext="{Binding FeeNames}" FontSize="{StaticResource FontSizeMedium}"
+                          Style="{StaticResource ComboBoxValidationTemplate}"
+                          IsEditable="True" Grid.RowSpan="2" Margin="5 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.SetFeeStructureCommand ,ElementName=stackpanel}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                
+                <!--Amount-->
+                <TextBox DataContext="{Binding Amount}" FontSize="{StaticResource FontSizeMedium}"
+                         Grid.Column="1" Style="{StaticResource TextBoxWithLabelVertical}" Margin="5 0"/>
+
+                <!--Late Fee-->
+                <TextBox DataContext="{Binding LateFee}" FontSize="{StaticResource FontSizeMedium}"
+                         Grid.Column="2" Style="{StaticResource TextBoxWithLabelVertical}" Margin="5 0"/>
+
+                <!--Discount-->
+                <TextBox DataContext="{Binding Discount}" FontSize="{StaticResource FontSizeMedium}"
+                         Grid.Column="3" Style="{StaticResource TextBoxWithLabelVertical}" Margin="5 0"/>
+
+                <!--Due Date-->
+                <DatePicker Grid.Column="4" Style="{StaticResource DatePickerTemplate}"
+                            DataContext="{Binding DueDate}" Margin="5 0"
+                            FontSize="{StaticResource FontSizeMedium}">
+                </DatePicker>
+
+                <!--Month-->
+                <ComboBox DataContext="{Binding FeeMonths}" Grid.Column="5" Margin="5 0"
+                          Style="{StaticResource ComboBoxValidationTemplate}" 
+                          FontSize="{StaticResource FontSizeMedium}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.UpdateDueDateCommand ,ElementName=stackpanel}"/>
+                    </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <!--Month-->
+                <ComboBox DataContext="{Binding FeeYears}" Grid.Column="6" Margin="5 0"
+                          Style="{StaticResource ComboBoxValidationTemplate}" FontSize="{StaticResource FontSizeMedium}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.UpdateDueDateCommand ,ElementName=stackpanel}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </Grid>
+        
+        </Border>
+
+        <Button HorizontalAlignment="Right"
+                Content="Add"
+                Grid.Row="5"
+                Margin="0 10 20 0"
+                Padding="20 2"
+                Style="{StaticResource LightPrimaryButton}"
+                Command="{Binding DataContext.AddFeeCommand, ElementName=stackpanel}"
+                Visibility="{Binding IsChecked,ElementName=addFee, Converter={local:BoolToVisibilityConverter}}"/>
+
+        <ScrollViewer Grid.Row="6" Margin="0">
+            <Grid Margin="0 0 0 20">
+                <TextBlock Text="No Record Found..!"
+                           Foreground="{StaticResource DarkGrayBrush}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Visibility="{Binding ItemsSource, ElementName=feeDetails, Converter={local:EmptyRecordMessageConverter}}"/>
+                <ItemsControl Name="feeDetails" 
+                              Style="{StaticResource FeeDetailsTemplate}"
+                              ItemsSource="{Binding FeeRecordCollection}"/>
+
+            </Grid>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

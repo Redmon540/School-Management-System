@@ -1,0 +1,2 @@
+﻿Students datagrid don't add fee information when showing students record
+Fee Details Dialog minimize maximize fee collection size problem

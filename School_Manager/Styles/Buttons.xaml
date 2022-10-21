@@ -1,0 +1,1911 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MaterialDesignThemes.Wpf"
+    xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:local="clr-namespace:School_Manager"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <!--  Window Control Button  -->
+    <Style x:Key="WindowControlButton" TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1.2" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{TemplateBinding Foreground}"
+                            Text="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource LightGrayBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Window CLose Button  -->
+    <Style
+        x:Key="WindowCloseButton"
+        BasedOn="{StaticResource WindowControlButton}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="8,0,15,0" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                            To="{StaticResource RedColor}"
+                            Duration="0:0:0.3" />
+                        <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"
+                            To="{StaticResource LightColor}"
+                            Duration="0:0:0.3" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                            From="{StaticResource RedColor}"
+                            Duration="0:0:0.3" />
+                        <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"
+                            From="{StaticResource LightColor}"
+                            Duration="0:0:0.3" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Custom Buton  -->
+    <Style
+        x:Key="CustomButton"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="Padding" Value="50,15" />
+        <Setter Property="Margin" Value="0,10" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="10"
+                        SnapsToDevicePixels="true">
+                        <TextBlock
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Focusable="False"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Text="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource SecondaryColorBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource LightGrayBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Link Buton  -->
+    <Style
+        x:Key="LinkButton"
+        TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource DarkGrayBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="Cursor" Value="Hand" />
+
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <TextBlock
+                        Margin="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Focusable="False"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Text="{TemplateBinding Content}" />
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.4" />
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource DarkGray}"
+                                        Duration="0:0:0.4" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource DarkGrayBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Main Button  -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,8" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Light Primary Button  -->
+    <Style x:Key="LightPrimaryButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2,4" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    
+                            <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
+                                </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="BorderBrush.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.2" />
+                                    <ColorAnimation
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="BorderBrush.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                    <ColorAnimation
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LightPrimaryFillButton" TargetType="{x:Type Button}">
+        
+        <Setter Property="Background" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,0" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                    <ColorAnimation
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource LightColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource LightColor}"
+                                        Duration="0:0:0.2" />
+                                    <ColorAnimation
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Flat Button  -->
+    <Style x:Key="FlatButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource VeryDarkGrayBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="10 10" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    >
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple 
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <TextBlock Margin="{TemplateBinding Padding}" FontFamily="{StaticResource FontAwesomeSolid}"  Text="{TemplateBinding Content}" />
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Selector.IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource DarkGrayBrush}" TargetName="border"/>
+                        </Trigger>
+                        <Trigger Property="Selector.IsSelected" Value="False">
+                            <Setter Property="Background" Value="Transparent" TargetName="border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Main Hoverless Button  -->
+    <Style x:Key="HoverlessMainButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,8" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource PrimaryDarkColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--Red Main button-->
+    <Style x:Key="HoverlessRedButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource RedColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,8" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource DarkRedColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource RedColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--Yellow Main button-->
+    <Style x:Key="HoverlessYellowButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource YellowColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,8" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource DarkYellowColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource YellowColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Secondary Button  -->
+    <Style x:Key="SecondaryButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource SecondaryAccentForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource SecondaryAccentBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,8" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        From="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Button with Content inside view box to adjust its content according to the container size  -->
+    <Style x:Key="ViewBoxButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20,8" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False" />
+        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Grid>
+
+                        <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                            <Grid>
+                                <Border
+                                    x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="10">
+                                    <Border.Effect>
+                                        <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <Converters:ShadowConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.Effect>
+                                </Border>
+                                <ProgressBar
+                                    x:Name="ProgressBar"
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}}"
+                                    Height="{TemplateBinding Height}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding (materialDesign:ButtonProgressAssist.IndicatorBackground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="{Binding (materialDesign:ButtonProgressAssist.IndicatorForeground), RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsIndeterminate="{Binding (materialDesign:ButtonProgressAssist.IsIndeterminate), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Maximum="{Binding (materialDesign:ButtonProgressAssist.Maximum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Minimum="{Binding (materialDesign:ButtonProgressAssist.Minimum), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Opacity="{Binding (materialDesign:ButtonProgressAssist.Opacity), RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                    Value="{Binding (materialDesign:ButtonProgressAssist.Value), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ProgressBar.Visibility>
+                                        <Binding Path="(materialDesign:ButtonProgressAssist.IsIndicatorVisible)" RelativeSource="{RelativeSource TemplatedParent}">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ProgressBar.Visibility>
+                                </ProgressBar>
+                            </Grid>
+                        </AdornerDecorator>
+                        <materialDesign:Ripple
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Focusable="False"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Viewbox>
+                                <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                            </Viewbox>
+                        </materialDesign:Ripple>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="Background.Color"
+                                        To="{StaticResource PrimaryColor}"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="materialDesign:ShadowAssist.Darken" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Side Menu Secondary Button  -->
+    <Style x:Key="SideMenuPrimaryButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle
+                                    Margin="2"
+                                    SnapsToDevicePixels="True"
+                                    Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                    StrokeDashArray="1 2"
+                                    StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+        <Setter Property="Padding" Value="30,0,0,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{StaticResource PrimaryLightColorBrush}">
+                        <materialDesign:Ripple
+                            x:Name="content"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            Focusable="False"
+                            Foreground="{TemplateBinding Foreground}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <TextBlock
+                            x:Name="arrow"
+                            Margin="0,0,30,0"
+                            Padding="0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            RenderTransformOrigin="0.5 0.5"
+                            Text="&#xf0da;">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="content"
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.1" />
+                                    <ColorAnimation
+                                        Storyboard.TargetName="arrow"
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource SecondaryColor}"
+                                        Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="content"
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource LightColor}"
+                                        Duration="0:0:0.1" />
+                                    <ColorAnimation
+                                        Storyboard.TargetName="arrow"
+                                        Storyboard.TargetProperty="Foreground.Color"
+                                        To="{StaticResource LightColor}"
+                                        Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Icon Grow button  -->
+    <Style x:Key="IconGrowButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource VeryDarkGrayBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        Background="Transparent"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+
+                        <!--  Add a render scale transform  -->
+                        <Border.RenderTransform>
+                            <ScaleTransform />
+                        </Border.RenderTransform>
+                        <Border.RenderTransformOrigin>
+                            <Point X="0.5" Y="0.5" />
+                        </Border.RenderTransformOrigin>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Foreground="{TemplateBinding Foreground}" 
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="Center"
+                                       Focusable="False" Name="icon"
+                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                       Text="{TemplateBinding Content}" />
+                            <TextBlock Grid.Column="1" Foreground="{TemplateBinding Background}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="Center" Margin="5 0 0 0"
+                                       Focusable="False" Name="text"
+                                       FontWeight="{TemplateBinding FontWeight}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                       Text="{TemplateBinding Tag}" />
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--if button don't contain any test then hide the text container -->
+                        <Trigger Property="Tag" Value="{x:Null}">
+                            <Setter TargetName="text" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1.4"
+                                        Duration="0:0:0.15" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1.4"
+                                        Duration="0:0:0.15" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1"
+                                        Duration="0:0:0.15" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1"
+                                        Duration="0:0:0.15" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="icon" Property="Foreground" Value="{StaticResource DarkGrayBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Content Grow button  -->
+    <Style x:Key="ContentGrowButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource VeryDarkGrayBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        Background="Transparent"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+
+                        <!--  Add a render scale transform  -->
+                        <Border.RenderTransform>
+                            <ScaleTransform />
+                        </Border.RenderTransform>
+                        <Border.RenderTransformOrigin>
+                            <Point X="0.5" Y="0.5" />
+                        </Border.RenderTransformOrigin>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Foreground="{TemplateBinding Foreground}" 
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="Center"
+                                       Focusable="False" Name="icon"
+                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                       Text="{TemplateBinding Content}" />
+                            <TextBlock Grid.Column="1" Foreground="{TemplateBinding Background}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="Center" Margin="5 0 0 0"
+                                       Focusable="False" Name="text"
+                                       FontWeight="{TemplateBinding FontWeight}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                       Text="{TemplateBinding Tag}" />
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--if button don't contain any test then hide the text container -->
+                        <Trigger Property="Tag" Value="{x:Null}">
+                            <Setter TargetName="text" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1.1"
+                                        Duration="0:0:0.15" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1.1"
+                                        Duration="0:0:0.15" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1"
+                                        Duration="0:0:0.15" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1"
+                                        Duration="0:0:0.15" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="icon" Property="Foreground" Value="{StaticResource DarkGrayBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Icon Grow Hover button  -->
+    <Style
+        x:Key="IconGrowHoverButton"
+        BasedOn="{StaticResource IconGrowButton}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Opacity" Value="0.3" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+                            Storyboard.TargetProperty="Opacity"
+                            To="1"
+                            Duration="0:0:0.2" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+                            Storyboard.TargetProperty="Opacity"
+                            To="0.3"
+                            Duration="0:0:0.2" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--  Popup Button Style  -->
+    <Style x:Key="PopupBoxStyle" TargetType="{x:Type materialDesign:PopupBox}">
+        <Setter Property="ToggleContent">
+            <Setter.Value>
+                <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
+                    Margin="4,0"
+                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type materialDesign:PopupBox}}}"
+                    Kind="EllipsisVertical" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="{DynamicResource MaterialDesignFlatButtonRipple}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Padding" Value="0,8" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type materialDesign:PopupBox}">
+                    <ControlTemplate.Resources>
+                        <Style x:Key="{x:Type Separator}" TargetType="{x:Type Separator}">
+                            <Style.BasedOn>
+                                <Style TargetType="{x:Type Separator}">
+                                    <Setter Property="Background" Value="{DynamicResource MaterialDesignSelection}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignSelection}" />
+                                    <Setter Property="MinHeight" Value="1" />
+                                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                                    <Setter Property="Height" Value="16" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Separator}">
+                                                <Rectangle
+                                                    Height="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Fill="{TemplateBinding Background}" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Style.BasedOn>
+                        </Style>
+                        <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <materialDesign:Ripple
+                                            Padding="{TemplateBinding Padding}"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            ClipToBounds="False"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Focusable="False"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <Grid>
+                        <ToggleButton
+                            x:Name="PART_Toggle"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding ToggleContent}"
+                            ContentTemplate="{TemplateBinding ToggleContentTemplate}"
+                            Cursor="Hand"
+                            IsChecked="{Binding IsPopupOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                <materialDesign:Ripple
+                                                    Padding="{TemplateBinding Padding}"
+                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    materialDesign:RippleAssist.IsCentered="True"
+                                                    ClipToBounds="False"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    Focusable="False"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                        <ControlzEx:PopupEx
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            CustomPopupPlacementCallback="{Binding PopupPlacementMethod, RelativeSource={RelativeSource TemplatedParent}}"
+                            HorizontalOffset="14"
+                            IsOpen="{Binding IsPopupOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Placement="Bottom"
+                            PopupAnimation="Scroll"
+                            VerticalOffset="-10">
+
+
+                            <!--  Custom Popup Menu  -->
+                            <!--  Bubble  -->
+                            <Border Padding="15,10,15,10">
+                                <Border.Resources>
+                                    <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
+                                        <Setter Property="VerticalContentAlignment" Value="Bottom" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                        <Setter Property="Padding" Value="16,0,16,16" />
+                                        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Grid>
+                                                        <Border x:Name="MouseOverBorder" Opacity="0">
+                                                            <Border.Background>
+                                                                <TemplateBinding Property="Foreground">
+                                                                    <TemplateBinding.Converter>
+                                                                        <Converters:BrushRoundConverter HighValue="White" LowValue="Black" />
+                                                                    </TemplateBinding.Converter>
+                                                                </TemplateBinding>
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <materialDesign:Ripple
+                                                            MinHeight="48"
+                                                            Padding="{TemplateBinding Padding}"
+                                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                            Content="{TemplateBinding Content}"
+                                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                            Focusable="False"
+                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                                            <materialDesign:Ripple.Feedback>
+                                                                <TemplateBinding Property="Foreground">
+                                                                    <TemplateBinding.Converter>
+                                                                        <Converters:BrushRoundConverter HighValue="White" LowValue="Black" />
+                                                                    </TemplateBinding.Converter>
+                                                                </TemplateBinding>
+                                                            </materialDesign:Ripple.Feedback>
+                                                        </materialDesign:Ripple>
+                                                        <VisualStateManager.VisualStateGroups>
+                                                            <VisualStateGroup x:Name="CommonStates">
+                                                                <VisualStateGroup.Transitions>
+                                                                    <VisualTransition
+                                                                        GeneratedDuration="0:0:0.3"
+                                                                        Storyboard="{x:Null}"
+                                                                        From="{x:Null}"
+                                                                        To="Normal">
+                                                                        <VisualTransition.GeneratedEasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut" />
+                                                                        </VisualTransition.GeneratedEasingFunction>
+                                                                    </VisualTransition>
+                                                                </VisualStateGroup.Transitions>
+                                                                <VisualState x:Name="Normal" />
+                                                                <VisualState x:Name="MouseOver">
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation
+                                                                            Storyboard.TargetName="MouseOverBorder"
+                                                                            Storyboard.TargetProperty="Opacity"
+                                                                            To="0.1"
+                                                                            Duration="0" />
+                                                                    </Storyboard>
+                                                                </VisualState>
+                                                                <VisualState x:Name="Disabled">
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation
+                                                                            Storyboard.TargetProperty="Opacity"
+                                                                            To="0.48"
+                                                                            Duration="0" />
+                                                                    </Storyboard>
+                                                                </VisualState>
+                                                            </VisualStateGroup>
+                                                        </VisualStateManager.VisualStateGroups>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+
+                                </Border.Resources>
+                                <Grid Grid.Row="1" Margin="0,10,-10,0">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <!--  bubble anchor  -->
+                                    <Path
+                                        Grid.Row="0"
+                                        Margin="15,0,17,0"
+                                        HorizontalAlignment="Right"
+                                        Panel.ZIndex="1"
+                                        Data="M 0,10 L 10,0 l 10,10"
+                                        Fill="{StaticResource LightGrayBrush}"
+                                        Stroke="Black"
+                                        StrokeThickness="0" />
+                                    <!--  bubble rectangle  -->
+                                    <Border
+                                        Grid.Row="1"
+                                        Margin="5,0,0,0"
+                                        Padding="12"
+                                        Background="{StaticResource LightGrayBrush}"
+                                        CornerRadius="10">
+
+                                        <Border.Effect>
+                                            <DropShadowEffect
+                                                BlurRadius="6"
+                                                ShadowDepth="2"
+                                                Color="{StaticResource DarkGray}" />
+                                        </Border.Effect>
+
+                                        <!--  Content inside popup  -->
+                                        <ContentControl Content="{TemplateBinding PopupContent}" />
+                                    </Border>
+
+                                </Grid>
+                            </Border>
+
+                        </ControlzEx:PopupEx>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.23" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Delete Feild Button  -->
+    <Style x:Key="DeleteFeildButton" TargetType="{x:Type Button}">
+
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="0" />
+
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="PART_Button" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="PART_Button" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="0" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="5"
+                            Text="{TemplateBinding Content}" />
+
+                        <Button
+                            Name="PART_Button"
+                            Grid.Column="1"
+                            Width="10"
+                            Margin="10,5,5,5"
+                            Command="{TemplateBinding Tag}"
+                            CommandParameter="{TemplateBinding CommandParameter}"
+                            Content="{StaticResource CrossIcon}"
+                            Foreground="{StaticResource RedColorBrush}"
+                            Opacity="0"
+                            Style="{StaticResource IconGrowButton}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--Student Promotion Button-->
+    <Style x:Key="PromotionButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource LightColorBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center" 
+                                          Content="{TemplateBinding Content, Converter={local:StudentPromotionConverter}}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Button.Content">
+                            <Trigger.Value>
+                                <sys:Boolean>True</sys:Boolean>
+                            </Trigger.Value>
+                            <Setter Property="Background" Value="{StaticResource GreenColorBrush}" TargetName="border"/>
+                        </Trigger>
+                        <Trigger Property="Button.Content">
+                            <Trigger.Value>
+                                <sys:Boolean>False</sys:Boolean>
+                            </Trigger.Value>
+                            <Setter Property="Background" Value="{StaticResource RedColorBrush}" TargetName="border"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

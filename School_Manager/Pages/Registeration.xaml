@@ -1,0 +1,68 @@
+﻿<local:BasePage x:TypeArguments="local:RegistrationViewModel"
+                x:Class="School_Manager.Registeration"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                xmlns:local="clr-namespace:School_Manager"
+                mc:Ignorable="d" 
+                Title="Registeration"
+                Background="White">   
+    <ScrollViewer>
+        <Grid Margin="20 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Header-->
+            <local:Header Heading="Registration"
+                          Grid.ColumnSpan="2"/>
+            <!--Registration Key-->
+            <TextBox Style="{StaticResource TextBoxWithLabelVertical}"
+                     DataContext="{Binding RegistrationKey}"
+                     Margin="10 30" Grid.Row="1" FontSize="{StaticResource FontSizeMedium}" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.KeyChangedCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:BasePage}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <!--Registration Type-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                      Grid.Column="1" Grid.Row="1" FontSize="{StaticResource FontSizeMedium}"
+                      DataContext="{Binding Type}" Margin="10 10">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.TypeChangedCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:BasePage}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+
+            <!--Registration Period-->
+            <TextBlock Text="{Binding RegistrationPeriod, Mode=TwoWay}" 
+                       HorizontalAlignment="Center"
+                       FontWeight="SemiBold"
+                       Margin="10"
+                       FontSize="{StaticResource FontSizeRegular}"
+                       Grid.Row="2" Grid.ColumnSpan="2"/>
+
+            <!--Register-->
+            <Button HorizontalAlignment="Center" 
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Top"
+                    Grid.Row="3"
+                    Content="Register"
+                    Command="{Binding RegisterCommand}"/>
+        </Grid>
+    </ScrollViewer>
+</local:BasePage>

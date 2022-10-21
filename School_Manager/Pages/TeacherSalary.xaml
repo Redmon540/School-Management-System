@@ -1,0 +1,76 @@
+﻿<local:BasePage x:TypeArguments="local:TeacherSalaryViewModel"
+              x:Class="School_Manager.TeacherSalary"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+              xmlns:local="clr-namespace:School_Manager"
+              mc:Ignorable="d" 
+              Title="TeacherSalary" Background="White">
+
+        <Grid Margin="20 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--Header-->
+        <local:Header Heading="Salary Sheet" Grid.ColumnSpan="2"/>
+
+
+        <!--Month-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                          DataContext="{Binding Months}"
+                          Grid.Column="0"
+                      Grid.Row="1"
+                          Cursor="Hand"
+                          Margin="10 0"
+                          MaxWidth="200"
+                          FontSize="{StaticResource FontSizeSmall}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.GetSalaryRecordCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            
+            <!--Year-->
+            <ComboBox Style="{StaticResource ComboBoxValidationTemplate}"
+                          DataContext="{Binding Years}"
+                          Grid.Column="1"
+                      Grid.Row="1"
+                          Cursor="Hand"
+                          Margin="10 0"
+                          MaxWidth="200"
+                          FontSize="{StaticResource FontSizeSmall}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.GetSalaryRecordCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BasePage}}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            
+            
+            <!--Salary Sheet-->
+            <ScrollViewer Grid.Row="2" Grid.ColumnSpan="2">
+                <local:SalarySheet HorizontalAlignment="Center" Margin="20 10"
+                                   DataContext="{Binding SalarySheetViewModel}"/>
+            </ScrollViewer>
+            
+            <!--Create Salary Sheet-->
+            <Button Content="Create Salary Sheet"
+                    Command="{Binding CreateSalarySheetCommand}"
+                    HorizontalAlignment="Right"
+                    Margin="20" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+        </Grid>
+</local:BasePage>

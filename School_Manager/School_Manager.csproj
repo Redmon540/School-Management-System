@@ -1,0 +1,920 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PropertyChanged.Fody.3.0.1\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.3.0.1\build\PropertyChanged.Fody.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0C3B272C-FC86-4BF7-8435-9F1F3135002D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>School_Manager</RootNamespace>
+    <AssemblyName>School_Manager</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Dell\Desktop\IMS Setup\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Institute Management System</ProductName>
+    <PublisherName>Institute Management System</PublisherName>
+    <SuiteName>Institute Management System</SuiteName>
+    <ApplicationRevision>23</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>329D9D5715B8228BEAF3D9C0F2047DDDEE68C1EA</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>School_Manager_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ChromeTabs, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFChromeTabsMVVM.1.3.1\lib\net40\ChromeTabs.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.2.920, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=3.0.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.3.0.1\lib\net452\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.3.6\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.5.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.5.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.5.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.5.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.5.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.5.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Animations\FrameWorkElementAnimations.cs" />
+    <Compile Include="Animations\PageAnimation.cs" />
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\NoFramHistory.cs" />
+    <Compile Include="Commands\RelayParameterizedCommand.cs" />
+    <Compile Include="Dialogs\SetProductInformation.xaml.cs">
+      <DependentUpon>SetProductInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper Classes\CenterOnSizeChangeBehaviour.cs" />
+    <Compile Include="Helper Classes\Data Entites\ColumnEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\Expense.cs" />
+    <Compile Include="Helper Classes\DialogTitleColor.cs" />
+    <Compile Include="Helper Classes\TextEntry.cs" />
+    <Compile Include="Messaging Model\SMS.cs" />
+    <Compile Include="Pages\ApplicationSetup.xaml.cs">
+      <DependentUpon>ApplicationSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EnterExpense.xaml.cs">
+      <DependentUpon>EnterExpense.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SendMessage.xaml.cs">
+      <DependentUpon>SendMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Dialogs\SetProductInfoViewModel.cs" />
+    <Compile Include="ViewModels\Pages\AccountViewModel.cs" />
+    <Compile Include="ViewModels\Pages\EnterExpenseViewModel.cs" />
+    <Compile Include="Helper Classes\Data Entites\MapperEntity.cs" />
+    <Compile Include="Helper Classes\ProductInformation.cs" />
+    <Compile Include="Helper Classes\RegistrationType.cs" />
+    <Compile Include="Helper Classes\RegistrationWarning.cs" />
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditStudentInfo.xaml.cs">
+      <DependentUpon>EditStudentInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditTeacherInfo.xaml.cs">
+      <DependentUpon>EditTeacherInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ImportStudents.xaml.cs">
+      <DependentUpon>ImportStudents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ImportTeacherData.xaml.cs">
+      <DependentUpon>ImportTeacherData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Registeration.xaml.cs">
+      <DependentUpon>Registeration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RegistrationControl.xaml.cs">
+      <DependentUpon>RegistrationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Pages\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateStudentInfoViewModel.cs" />
+    <Compile Include="ViewModels\Pages\DashboardViewModel.cs" />
+    <Compile Include="Data Management\DataAccess.cs" />
+    <Compile Include="Dialogs\EditParentsRecord.xaml.cs">
+      <DependentUpon>EditParentsRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditTeacher.xaml.cs">
+      <DependentUpon>EditTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ViewParentRecord.xaml.cs">
+      <DependentUpon>ViewParentRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ViewTeacher.xaml.cs">
+      <DependentUpon>ViewTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper Classes\Account.cs" />
+    <Compile Include="Helper Classes\ApplicationPage.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Dialogs\Base\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Base\DialogWindowViewModel.cs" />
+    <Compile Include="Dialogs\DeleteStudentDialog.xaml.cs">
+      <DependentUpon>DeleteStudentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogManager.cs" />
+    <Compile Include="Dialogs\Base\DialogPage.xaml.cs">
+      <DependentUpon>DialogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ViewFeeDetails.xaml.cs">
+      <DependentUpon>ViewFeeDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper Classes\Data Entites\AccountEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\Check.cs" />
+    <Compile Include="Helper Classes\Data Entites\DateEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\DisabledTextEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\FeeEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\ParentIDEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\DesignerControls.cs" />
+    <Compile Include="Helper Classes\DataGridType.cs" />
+    <Compile Include="Helper Classes\ErrorValidation\ValidationType.cs" />
+    <Compile Include="Helper Classes\ExpressionHelper.cs" />
+    <Compile Include="Helper Classes\FeeDetailsType.cs" />
+    <Compile Include="Helper Classes\Helper.cs" />
+    <Compile Include="Helper Classes\Data Entites\ListEntity.cs" />
+    <Compile Include="Helper Classes\Data Entites\TextEntity.cs" />
+    <Compile Include="Helper Classes\ErrorValidation\ValidationRules.cs" />
+    <Compile Include="Helper Classes\Logger.cs" />
+    <Compile Include="Helper Classes\PageManager.cs" />
+    <Compile Include="Helper Classes\SideMenuItem.cs" />
+    <Compile Include="Helper Classes\SideMenuSubItems.cs" />
+    <Compile Include="Helper Classes\ValueWrapper.cs" />
+    <Compile Include="Helper Classes\VoucherTemplate.cs" />
+    <Compile Include="Helper Classes\WaitCursor.cs" />
+    <Compile Include="ID Cards\IDCardDummyViewModel.cs" />
+    <Compile Include="ID Cards\IDCardThumbnail.xaml.cs">
+      <DependentUpon>IDCardThumbnail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ID Cards\IDCardThumbnailViewModel.cs" />
+    <Compile Include="ID Cards\IDCardViewModel.cs" />
+    <Compile Include="ID Cards\Students\Student_Card_1_Back.xaml.cs">
+      <DependentUpon>Student_Card_1_Back.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ID Cards\Students\Student_Card_1_Front.xaml.cs">
+      <DependentUpon>Student_Card_1_Front.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ID Cards\Teachers\TeacherIDCard1.xaml.cs">
+      <DependentUpon>TeacherIDCard1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Move_Resize_Rotate_Tools\MoveThumb.cs" />
+    <Compile Include="Move_Resize_Rotate_Tools\ResizeThumb.cs" />
+    <Compile Include="Move_Resize_Rotate_Tools\RotateThumb.cs" />
+    <Compile Include="Pages\Base\CreateCustomStudentIDCard.xaml.cs">
+      <DependentUpon>CreateCustomStudentIDCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateCustomIDCards.xaml.cs">
+      <DependentUpon>CreateCustomIDCards.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateStudentIDCard.xaml.cs">
+      <DependentUpon>CreateStudentIDCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditClass.xaml.cs">
+      <DependentUpon>EditClass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FeeRecord.xaml.cs">
+      <DependentUpon>FeeRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MarkAttendenceManually.xaml.cs">
+      <DependentUpon>MarkAttendenceManually.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Parents.xaml.cs">
+      <DependentUpon>Parents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PromoteStudents.xaml.cs">
+      <DependentUpon>PromoteStudents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StudentAttendence.xaml.cs">
+      <DependentUpon>StudentAttendence.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TakeAttendence.xaml.cs">
+      <DependentUpon>TakeAttendence.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeacherAttendence.xaml.cs">
+      <DependentUpon>TeacherAttendence.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeacherSalary.xaml.cs">
+      <DependentUpon>TeacherSalary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SalarySheet\SalarySheet.xaml.cs">
+      <DependentUpon>SalarySheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SalarySheet\SalarySheetViewModel.cs" />
+    <Compile Include="Styles\PhotoTemplate.xaml.cs">
+      <DependentUpon>PhotoTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CardDesigner.xaml.cs">
+      <DependentUpon>CardDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DragableContent.xaml.cs">
+      <DependentUpon>DragableContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Header.xaml.cs">
+      <DependentUpon>Header.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueConverters\BitmapToThumbnailConverter.cs" />
+    <Compile Include="ValueConverters\IncheToPixelConverter.cs" />
+    <Compile Include="ViewModels\Pages\EditClassViewModel.cs" />
+    <Compile Include="ViewModels\Pages\EditStudentInfoViewModel.cs" />
+    <Compile Include="ViewModels\Pages\EditTeacherInfoViewModel.cs" />
+    <Compile Include="ViewModels\Pages\FeeRecordViewModel.cs" />
+    <Compile Include="ViewModels\Pages\ImportStudentsViewModel.cs" />
+    <Compile Include="ViewModels\Pages\ImportTeacherViewModel.cs" />
+    <Compile Include="ViewModels\Pages\MarkAttendenceManuallyViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PromoteStudentsViewModel.cs" />
+    <Compile Include="ViewModels\Pages\RegistrationViewModel.cs" />
+    <Compile Include="ViewModels\Pages\SendMessageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\SetupApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Pages\StudentAttendenceViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\EditParentsViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewParentRecordViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateCustomIDCardsViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateStudentIDCardViewModel.cs" />
+    <Compile Include="ViewModels\Pages\ParentsViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TakeAttendenceViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TeacherAttendenceViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TeacherSalaryViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\RegistrationControlViewModel.cs" />
+    <Compile Include="Window\ApplicationSetupWindow.xaml.cs">
+      <DependentUpon>ApplicationSetupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdmitStudent.xaml.cs">
+      <DependentUpon>AdmitStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdmitTeacher.xaml.cs">
+      <DependentUpon>AdmitTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Base\BasePage.cs" />
+    <Compile Include="Pages\CreateClass.xaml.cs">
+      <DependentUpon>CreateClass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditStudentRecord.xaml.cs">
+      <DependentUpon>EditStudentRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateFeeRecord.xaml.cs">
+      <DependentUpon>CreateFeeRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateFeeVoucher.xaml.cs">
+      <DependentUpon>CreateFeeVoucher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FeeCollection.xaml.cs">
+      <DependentUpon>FeeCollection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateAccount.xaml.cs">
+      <DependentUpon>CreateAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Animations\PageAnimations.cs" />
+    <Compile Include="Animations\StoryboardHelpers.cs" />
+    <Compile Include="Pages\Students.xaml.cs">
+      <DependentUpon>Students.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ViewStudentRecord.xaml.cs">
+      <DependentUpon>ViewStudentRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Teachers.xaml.cs">
+      <DependentUpon>Teachers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Security\SecureStringHelpers.cs" />
+    <Compile Include="UserControls\CustomDataGrid.xaml.cs">
+      <DependentUpon>CustomDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PageHost.xaml.cs">
+      <DependentUpon>PageHost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SearchableDataGrid.xaml.cs">
+      <DependentUpon>SearchableDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SearchBox.xaml.cs">
+      <DependentUpon>SearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SideMenu.xaml.cs">
+      <DependentUpon>SideMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SideMenuButton.xaml.cs">
+      <DependentUpon>SideMenuButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
+    <Compile Include="ValueConverters\Base\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\StudentPromotionConverter.cs" />
+    <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\EmptyRecordMessageConverter.cs" />
+    <Compile Include="ValueConverters\FeeOptionsVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\MultiValueConverter.cs" />
+    <Compile Include="ValueConverters\RotationToConverter.cs" />
+    <Compile Include="ViewModels\Base\BasePropertyChanged.cs" />
+    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Compile Include="Helper Classes\IHavePassword.cs" />
+    <Compile Include="ViewModels\Dialogs\DeleteStudentDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\EditTeacherViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MessageDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewFeeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewTeacherViewModel.cs" />
+    <Compile Include="ViewModels\Pages\AdmitStudentViewModel.cs" />
+    <Compile Include="ViewModels\Pages\AdmitTeacherViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateClassViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\EditStudentRecordViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateAccountViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateFeeRecordViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateFeeVoucherViewModel.cs" />
+    <Compile Include="ViewModels\Pages\CreateTeachersViewModel.cs" />
+    <Compile Include="ViewModels\Pages\FeeCollectionViewModel.cs" />
+    <Compile Include="ViewModels\Pages\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Pages\StudentsViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewStudentRecordViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TeachersViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\SideMenuViewModel.cs" />
+    <Compile Include="Window\LoginWindowViewModel.cs" />
+    <Compile Include="Window\RegistrationWindow.xaml.cs">
+      <DependentUpon>RegistrationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\RegistrationWindowViewModel.cs" />
+    <Compile Include="Window\WindowViewModel.cs" />
+    <Compile Include="Window\WindowResizer.cs" />
+    <Page Include="Dialogs\SetProductInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ApplicationSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\Base\DialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\Base\DialogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DeleteStudentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\EditParentsRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\EditTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\MessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ViewFeeDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ViewParentRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ViewTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="ID Cards\IDCardThumbnail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ID Cards\Students\Student_Card_1_Back.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ID Cards\Students\Student_Card_1_Front.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ID Cards\Teachers\TeacherIDCard1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Base\CreateCustomStudentIDCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateCustomIDCards.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateStudentIDCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditStudentInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditTeacherInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EnterExpense.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FeeRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ImportStudents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ImportTeacherData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MarkAttendenceManually.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Parents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PromoteStudents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Registeration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SendMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StudentAttendence.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TakeAttendence.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TeacherAttendence.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TeacherSalary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SalarySheet\SalarySheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CardDesignerTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PhotoTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CardDesigner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DragableContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Header.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RegistrationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\ApplicationSetupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdmitStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdmitTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\EditStudentRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateFeeRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateFeeVoucher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FeeCollection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateAccount.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Students.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ViewStudentRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Teachers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Windows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Templates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\TextFeilds.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CustomDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PageHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SearchableDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SearchBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SideMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SideMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="School_Manager_TemporaryKey.pfx" />
+    <Resource Include="Fonts\Lato-Black.ttf" />
+    <Resource Include="Fonts\Lato-BlackItalic.ttf" />
+    <Resource Include="Fonts\Lato-Bold.ttf" />
+    <Resource Include="Fonts\Lato-BoldItalic.ttf" />
+    <Resource Include="Fonts\Lato-Hairline.ttf" />
+    <Resource Include="Fonts\Lato-HairlineItalic.ttf" />
+    <Resource Include="Fonts\Lato-Italic.ttf" />
+    <Resource Include="Fonts\Lato-Light.ttf" />
+    <Resource Include="Fonts\Lato-LightItalic.ttf" />
+    <Resource Include="Fonts\Lato-Regular.ttf" />
+    <Resource Include="Fonts\FontAwesomeRegular.otf" />
+    <Resource Include="Fonts\FontAwesomeBrands.otf" />
+    <Resource Include="Fonts\FontAwesomeSolid.otf" />
+    <Resource Include="Fonts\ADAM.CG PRO.otf" />
+    <Resource Include="Fonts\Moon Bold.otf" />
+    <Resource Include="Fonts\Moon Light.otf" />
+    <Resource Include="Fonts\ageo-personal-use.bold.otf" />
+    <Resource Include="Fonts\ageo-personal-use.heavy.otf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Scripts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Reminders.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="rotate-cursor.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ID Cards\Images\ID Card 2-Back.jpg" />
+    <Resource Include="ID Cards\Images\ID Card 2-Front.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ID Cards\Images\DemoLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ID Cards\Images\student photo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="rotate-cursor1.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QRCode.png" />
+    <Resource Include="Resources\Photo-placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QR_Scan_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Licence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\infinityLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\infinityLogo.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.5.0.6\build\Fody.targets" Condition="Exists('..\packages\Fody.5.0.6\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.5.0.6\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.5.0.6\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.0.1\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.0.1\build\PropertyChanged.Fody.props'))" />
+  </Target>
+</Project>

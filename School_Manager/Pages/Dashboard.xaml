@@ -1,0 +1,361 @@
+﻿<local:BasePage x:TypeArguments="local:DashboardViewModel"  
+                x:Class="School_Manager.Dashboard"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:School_Manager"
+                xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                mc:Ignorable="d" 
+                Title="Dashboard">
+
+    <ScrollViewer Padding="20" Background="{StaticResource VeryLightGrayBrush}">
+    
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition MinHeight="300"/>
+                <RowDefinition MinHeight="300"/>
+                <RowDefinition MinHeight="300"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <!--Students Parents & Teachers Count-->
+            <Grid Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            
+                <!--Students-->
+                <Border Background="{StaticResource LightColorBrush}"
+                        Padding="20" Margin="10">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center" Margin="30 0">
+                            <TextBlock Text="{StaticResource ClassIcon}"
+                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                       Foreground="{StaticResource DarkGreenColorBrush}"
+                                       FontSize="{StaticResource FontSizeLarge}"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Students"
+                                       FontSize="{StaticResource FontSizeRegular}"
+                                       Foreground="{StaticResource VeryDarkGrayBrush}"
+                                       Grid.Row="1"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    
+                        <Grid Grid.Column="1" 
+                              Background="{StaticResource VeryDarkGrayBrush}" 
+                              Width="1" Margin="0 5"/>
+                    
+                        <TextBlock Text="{Binding StudentsCount}"
+                                   Grid.Column="2"
+                                   FontSize="{StaticResource FontSizeRegular}"
+                                   VerticalAlignment="Center"
+                                   Grid.RowSpan="2"
+                                   Margin="30 0"/>
+                    </Grid>
+                </Border>
+
+                <!--Parents-->
+                <Border Background="{StaticResource LightColorBrush}"
+                        Padding="20" Margin="10" Grid.Column="1">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center" Margin="30 0">
+                            <TextBlock Text="{StaticResource ParentIcon}"
+                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                       Foreground="{StaticResource RedColorBrush}"
+                                       FontSize="{StaticResource FontSizeLarge}"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Parents"
+                                       FontSize="{StaticResource FontSizeRegular}"
+                                       Foreground="{StaticResource VeryDarkGrayBrush}"
+                                       Grid.Row="1"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Grid Grid.Column="1" 
+                              Background="{StaticResource VeryDarkGrayBrush}" 
+                              Width="1" Margin="0 5"/>
+
+                        <TextBlock Text="{Binding ParentsCount}"
+                                   Grid.Column="2"
+                                   FontSize="{StaticResource FontSizeRegular}"
+                                   VerticalAlignment="Center"
+                                   Grid.RowSpan="2"
+                                   Margin="30 0"/>
+                    </Grid>
+                </Border>
+
+                <!--Teachers-->
+                <Border Background="{StaticResource LightColorBrush}"
+                        Padding="20" Margin="10" Grid.Column="2">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center" Margin="30 0">
+                            <TextBlock Text="{StaticResource StudentIcon}"
+                                       FontFamily="{StaticResource FontAwesomeSolid}"
+                                       Foreground="{StaticResource DarkYellowColorBrush}"
+                                       FontSize="{StaticResource FontSizeLarge}"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Teachers"
+                                       FontSize="{StaticResource FontSizeRegular}"
+                                       Foreground="{StaticResource VeryDarkGrayBrush}"
+                                       Grid.Row="1"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Grid Grid.Column="1" 
+                              Background="{StaticResource VeryDarkGrayBrush}" 
+                              Width="1" Margin="0 5"/>
+
+                        <TextBlock Text="{Binding TeachersCount}"
+                                   Grid.Column="2"
+                                   FontSize="{StaticResource FontSizeRegular}"
+                                   VerticalAlignment="Center"
+                                   Grid.RowSpan="2"
+                                   Margin="30 0"/>
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+            <!--Selected Date-->
+            <DatePicker SelectedDate="{Binding SelectedDate}" HorizontalAlignment="Right"
+                        Grid.Column="1" Grid.Row="1" Margin="15 0"
+                        FontSize="{StaticResource FontSizeLarge}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedDateChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedDateChanged}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </DatePicker>
+
+            <!--Fee Collection-->
+            <Border Margin="10" Background="{StaticResource LightColorBrush}" Padding="10"
+                        Grid.Column="0" Grid.Row="2" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Fee Collections" HorizontalAlignment="Center"
+                               Foreground="{StaticResource VeryDarkGrayBrush}"
+                               FontWeight="SemiBold" FontSize="{StaticResource FontSizeRegular}"/>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding FeeCollection}"  
+                                        LegendLocation="None" >
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Days" LabelFormatter="{Binding XFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                </Grid>    
+                    
+                    </Border>
+            
+            <!--Collection Status-->
+            <Border Margin="10" Background="{StaticResource LightColorBrush}"
+                    Grid.Column="1" Padding="10" Grid.Row="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <lvc:PieChart Grid.Row="0" LegendLocation="None" Grid.RowSpan="2"
+                                  Hoverable="True" DataTooltip="{x:Null}" HoverPushOut="0"
+                                  Series="{Binding CollectionStatus}"/>
+                    <!--Legend-->
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center"
+                          Grid.Column="1" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Collection Status" HorizontalAlignment="Center"
+                               Foreground="{StaticResource VeryDarkGrayBrush}" Grid.Column="1"
+                               FontWeight="SemiBold" FontSize="{StaticResource FontSizeRegular}" Margin="5 10"/>
+                        <!--Present-->
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="1"
+                                Background="{StaticResource PrimaryVeryLightColorBrush}"/>
+                        
+                        <TextBlock Text="{Binding CollectedFees}" Grid.Column="1" Grid.Row="1"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="2"
+                                Background="{StaticResource RedColorBrush}"/>
+                        <TextBlock Text="{Binding DueFees}" Grid.Column="1" Grid.Row="2"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+                    </Grid>
+                </Grid>
+
+            </Border>
+
+            <!--Student Attendence-->
+            <Border Margin="10" Background="{StaticResource LightColorBrush}" Padding="10"
+                    Grid.Column="0" Grid.Row="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <lvc:PieChart LegendLocation="None" Grid.Row="0" Grid.RowSpan="2" HoverPushOut="0"
+                                  Hoverable="True" DataTooltip="{x:Null}" 
+                                  Series="{Binding StudentAttendence}"/>
+                    <!--Legend-->
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center"
+                          Grid.Column="1" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Student Attendence" HorizontalAlignment="Center" Grid.Column="1"
+                               Foreground="{StaticResource VeryDarkGrayBrush}" Grid.Row="0"
+                               FontWeight="SemiBold" FontSize="{StaticResource FontSizeRegular}"/>
+                        <!--Present-->
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="1"
+                                Background="{StaticResource DarkGreenColorBrush}"/>
+                        <TextBlock Text="{Binding StudentPresent}" Grid.Column="1" Grid.Row="1"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="2"
+                                Background="{StaticResource RedColorBrush}"/>
+                        <TextBlock Text="{Binding StudentAbsent}" Grid.Column="1" Grid.Row="2"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="3"
+                                Background="{StaticResource DarkYellowColorBrush}"/>
+                        <TextBlock Text="{Binding StudentLeave}" Grid.Column="1" Grid.Row="3"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            
+            <!--Teachers Attendence-->
+            <Border Margin="10" Background="{StaticResource LightColorBrush}" Padding="10"
+                    Grid.Column="1" Grid.Row="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <lvc:PieChart LegendLocation="None" Series="{Binding TeacherAttendence}" HoverPushOut="0"
+                                  Hoverable="True" DataTooltip="{x:Null}" Grid.RowSpan="2"/>
+                    <!--Legend-->
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center"
+                          Grid.Column="1" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Teacher Attendence" HorizontalAlignment="Center"
+                               Foreground="{StaticResource VeryDarkGrayBrush}" Grid.Column="1"
+                               FontWeight="SemiBold" FontSize="{StaticResource FontSizeRegular}"/>
+                        <!--Present-->
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="1"
+                                Background="{StaticResource DarkGreenColorBrush}"/>
+                        <TextBlock Text="{Binding TeacherPresent}" Grid.Column="1"  Grid.Row="1"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="2"
+                                Background="{StaticResource RedColorBrush}"/>
+                        <TextBlock Text="{Binding TeacherAbsent}" Grid.Column="1" Grid.Row="2"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+
+                        <Border CornerRadius="5" Height="10" Width="10" Grid.Row="3"
+                                Background="{StaticResource DarkYellowColorBrush}"/>
+                        <TextBlock Text="{Binding TeacherLeave}" Grid.Column="1" Grid.Row="3"
+                                   VerticalAlignment="Center" Margin="5 10"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!--Monthly Expenses-->
+            <Border Margin="10" Background="{StaticResource LightColorBrush}" Padding="10"
+                        Grid.Column="0" Grid.Row="4" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Monthly Expenses" HorizontalAlignment="Center"
+                               Foreground="{StaticResource VeryDarkGrayBrush}"
+                               FontWeight="SemiBold" FontSize="{StaticResource FontSizeRegular}"/>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding MonthlyExpenses}"  
+                                        LegendLocation="None">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Days" LabelFormatter="{Binding XFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Grid>
+
+            </Border>
+
+            <!--Total Expenses-->
+            <Border Margin="10" Background="{StaticResource LightColorBrush}"
+                        Grid.Column="1" Padding="10" Grid.Row="4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Total Expenses" HorizontalAlignment="Center"
+                               Foreground="{StaticResource VeryDarkGrayBrush}" Grid.Column="1"
+                               FontWeight="SemiBold" FontSize="{StaticResource FontSizeRegular}"/>
+                    <lvc:PieChart Grid.Row="1" LegendLocation="Right"
+                                  Hoverable="True" InnerRadius="80" HoverPushOut="0"
+                                  Series="{Binding TotalExpenses}"/>
+                    
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+    </ScrollViewer>
+</local:BasePage>
